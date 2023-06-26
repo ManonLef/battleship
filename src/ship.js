@@ -4,4 +4,8 @@ export default class Ship {
     this.hit = 0
     this.sunk = false
   }
+
+  hit() {
+    return this.hit
+  }
 }
