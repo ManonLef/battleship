@@ -11,7 +11,9 @@ export default class GameBoard {
     for (let i = 0; i < rows.length; i++) {
       columns.forEach((index) => {
         const cell = {
-          data: rows[i] + index
+          data: rows[i] + index,
+          hit: false,
+          ship: null,
         };
         gameArray.push(cell)
       });
