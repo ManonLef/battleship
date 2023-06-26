@@ -1,3 +1,6 @@
+# user 
+*.test.js
+
 # Logs
 logs
 *.log
