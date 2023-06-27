@@ -50,6 +50,14 @@ export default class GameBoard {
         coordArray.push(coord[0] + (parseFloat(coord[1]) + i));
       }
     }
+
+    if (orientation === "vertical") {
+      const rowIndex = this.rows.findIndex((letter) => letter === coord[0]);
+      if (rowIndex + length > 10) return null;
+      for (let i = rowIndex; i <= length; i++) {
+        coordArray.push(this.rows[i]+coord[1])
+      }
+    }
     return coordArray;
   }
 }

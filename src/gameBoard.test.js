@@ -41,6 +41,18 @@ it("3.4. if a ship is too long for valid placement horizontally, return null dur
   expect(board.placeShip("b6", 5, "horizontal")).toBe(null)
 });
 
+// ship coordinates vertically
+it("4.0. expect ship coordinates vertically calculated", () => {
+  const board = new GameBoard();
+  expect(board.shipCoordinates("b2", 5, "vertical")).toStrictEqual([
+    "b2",
+    "c2",
+    "d2",
+    "e2",
+    "f2",
+  ]);
+});
+
 // constants to test
 const testTwo = [
   { data: "a1", hit: false, ship: { length: 5, sunk: false, timesHit: 0 } },
