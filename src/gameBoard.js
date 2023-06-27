@@ -23,12 +23,12 @@ export default class GameBoard {
     return gameArray;
   }
 
-  placeShip(coord, length) {
+  placeShip(coord, length, orientation) {
     const shipOne = new Ship(length);
 
-    const coordsArray = this.shipCoordinatesHorizontal(coord, length);
-    if (coordsArray === null) return null
-    
+    const coordsArray = this.shipCoordinates(coord, length, orientation);
+    if (coordsArray === null) return null;
+
     let coordToCheck = coordsArray.shift();
 
     while (coordsArray.length !== 0) {
@@ -41,11 +41,14 @@ export default class GameBoard {
     }
   }
 
-  shipCoordinatesHorizontal(coord, length) {
-    if ((parseFloat(coord[1]) + length) > 10) return null;
+  shipCoordinates(coord, length, orientation) {
     const coordArray = [];
-    for (let i = 0; i < length; i++) {
-      coordArray.push(coord[0] + (parseFloat(coord[1]) + i));
+
+    if (orientation === "horizontal") {
+      if (parseFloat(coord[1]) + length > 10) return null;
+      for (let i = 0; i < length; i++) {
+        coordArray.push(coord[0] + (parseFloat(coord[1]) + i));
+      }
     }
     return coordArray;
   }

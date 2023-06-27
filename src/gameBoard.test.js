@@ -2,7 +2,7 @@ import GameBoard from "./gameBoard";
 
 it("1. expect ship coordinates horizantally calculated", () => {
   const board = new GameBoard();
-  expect(board.shipCoordinatesHorizontal("a1", 5)).toStrictEqual([
+  expect(board.shipCoordinates("a1", 5, "horizontal")).toStrictEqual([
     "a1",
     "a2",
     "a3",
@@ -13,7 +13,7 @@ it("1. expect ship coordinates horizantally calculated", () => {
 
 it("2. expect gameboard to place ship length five at a1 to fill ship data for a1 through a5", () => {
   const board = new GameBoard();
-  board.placeShip("a1", 5);
+  board.placeShip("a1", 5, "horizontal");
   expect(board.array).toMatchObject(testTwo);
 });
 
@@ -24,18 +24,18 @@ it("3. expect gameboard array to be as tested", () => {
 
 it("4. expect gameboard to place ship length five at a1 to fill ship data for b3 through b8", () => {
   const board = new GameBoard();
-  board.placeShip("b3", 5);
+  board.placeShip("b3", 5, "horizontal");
   expect(board.array).toMatchObject(testFour);
 });
 
 it("5. if a ship is too long for valid placement horizontally, return null during array calculation", () => {
   const board = new GameBoard();
-  expect(board.shipCoordinatesHorizontal("b6", 5)).toBe(null)
+  expect(board.shipCoordinates("b6", 5, "horizontal")).toBe(null)
 });
 
 it("6. if a ship is too long for valid placement horizontally, return null during ship placement", () => {
   const board = new GameBoard();
-  expect(board.placeShip("b6", 5)).toBe(null)
+  expect(board.placeShip("b6", 5, "horizontal")).toBe(null)
 });
 
 const testTwo = [
