@@ -60,6 +60,11 @@ it("5.1. expect gameboard to place ship length five at b2 to fill ship data for 
   expect(board.array).toMatchObject(testFive);
 });
 
+it("5.2. if a ship is too long for valid placement vertically, return null during ship placement", () => {
+  const board = new GameBoard();
+  expect(board.placeShip("g5", 5, "vertical")).toBe(null)
+});
+
 // constants to test
 const testTwo = [
   { data: "a1", hit: false, ship: { length: 5, sunk: false, timesHit: 0 } },
