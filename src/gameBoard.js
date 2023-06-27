@@ -2,18 +2,18 @@ import Ship from "./ship";
 
 export default class GameBoard {
   constructor() {
+    this.columns = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    this.rows = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"];
     this.array = this.createGameArray();
   }
 
   createGameArray() {
-    const columns = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-    const rows = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"];
     const gameArray = [];
 
-    for (let i = 0; i < rows.length; i++) {
-      columns.forEach((index) => {
+    for (let i = 0; i < this.rows.length; i++) {
+      this.columns.forEach((index) => {
         const cell = {
-          data: rows[i] + index,
+          data: this.rows[i] + index,
           hit: false,
           ship: null,
         };
