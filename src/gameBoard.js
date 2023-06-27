@@ -1,3 +1,5 @@
+import Ship from "./ship";
+
 export default class GameBoard {
   constructor() {
     this.array = this.createGameArray();
@@ -15,9 +17,31 @@ export default class GameBoard {
           hit: false,
           ship: null,
         };
-        gameArray.push(cell)
+        gameArray.push(cell);
       });
     }
-    return gameArray
+    return gameArray;
+  }
+
+  // placeShip(coord) {
+  //   const shipOne = new Ship(5);
+  //   // assume horizontal
+  //   // add queue of cells column number
+
+  //   this.array.forEach((cell) => {
+  //     if (cell.data === coord) {
+  //       cell.ship = shipOne;
+  //       console.log(cell);
+  //     }
+  //   });
+  // }
+
+  shipCoordinates(coord, length) {
+    const coordArray = [coord]
+    for (let i = 1; i < length; i++) {
+      coordArray.push(coord[0]+(parseFloat(coord[1])+i))
+    }
+    return coordArray
   }
 }
+
