@@ -23,25 +23,27 @@ export default class GameBoard {
     return gameArray;
   }
 
-  // placeShip(coord) {
-  //   const shipOne = new Ship(5);
-  //   // assume horizontal
-  //   // add queue of cells column number
+  placeShip(coord, length) {
+    const shipOne = new Ship(length);
+  
+    const coordsArray = this.shipCoordinatesHorizontal(coord, length);
+    let coordToCheck = coordsArray.pop();
 
-  //   this.array.forEach((cell) => {
-  //     if (cell.data === coord) {
-  //       cell.ship = shipOne;
-  //       console.log(cell);
-  //     }
-  //   });
-  // }
-
-  shipCoordinates(coord, length) {
-    const coordArray = [coord]
-    for (let i = 1; i < length; i++) {
-      coordArray.push(coord[0]+(parseFloat(coord[1])+i))
+    while (coordsArray.length !== 0) {
+      for (let i = 0; i < this.array.length; i++) {
+        if (this.array[i].data === coordToCheck) {
+          coordToCheck = coordsArray.shift();
+          this.array[i].ship = shipOne;
+        }
+      }
     }
-    return coordArray
+  }
+
+  shipCoordinatesHorizontal(coord, length) {
+    const coordArray = [];
+    for (let i = 0; i < length; i++) {
+      coordArray.push(coord[0] + (parseFloat(coord[1]) + i));
+    }
+    return coordArray;
   }
 }
-
