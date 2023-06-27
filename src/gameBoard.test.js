@@ -1,6 +1,13 @@
 import GameBoard from "./gameBoard";
 
-it("1. expect ship coordinates horizantally calculated", () => {
+// gameBoard array basic
+it("1.0. expect gameboard array to be generated as tested", () => {
+  const board = new GameBoard();
+  expect(board.array).toStrictEqual(testThree);
+});
+
+// ship coordinates horizontally
+it("2.0. expect ship coordinates horizantally calculated", () => {
   const board = new GameBoard();
   expect(board.shipCoordinates("a1", 5, "horizontal")).toStrictEqual([
     "a1",
@@ -11,33 +18,30 @@ it("1. expect ship coordinates horizantally calculated", () => {
   ]);
 });
 
-it("2. expect gameboard to place ship length five at a1 to fill ship data for a1 through a5", () => {
+// ship placement horizontally
+it("3.1. expect gameboard to place ship length five at a1 to fill ship data for a1 through a5", () => {
   const board = new GameBoard();
   board.placeShip("a1", 5, "horizontal");
   expect(board.array).toMatchObject(testTwo);
 });
 
-it("3. expect gameboard array to be as tested", () => {
-  const board = new GameBoard();
-  expect(board.array).toStrictEqual(testThree);
-});
-
-it("4. expect gameboard to place ship length five at a1 to fill ship data for b3 through b8", () => {
+it("3.2. expect gameboard to place ship length five at a1 to fill ship data for b3 through b8", () => {
   const board = new GameBoard();
   board.placeShip("b3", 5, "horizontal");
   expect(board.array).toMatchObject(testFour);
 });
 
-it("5. if a ship is too long for valid placement horizontally, return null during array calculation", () => {
+it("3.3. if a ship is too long for valid placement horizontally, return null during array calculation", () => {
   const board = new GameBoard();
   expect(board.shipCoordinates("b6", 5, "horizontal")).toBe(null)
 });
 
-it("6. if a ship is too long for valid placement horizontally, return null during ship placement", () => {
+it("3.4. if a ship is too long for valid placement horizontally, return null during ship placement", () => {
   const board = new GameBoard();
   expect(board.placeShip("b6", 5, "horizontal")).toBe(null)
 });
 
+// constants to test
 const testTwo = [
   { data: "a1", hit: false, ship: { length: 5, sunk: false, timesHit: 0 } },
   { data: "a2", hit: false, ship: { length: 5, sunk: false, timesHit: 0 } },
