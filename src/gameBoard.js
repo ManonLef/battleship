@@ -25,21 +25,24 @@ export default class GameBoard {
 
   placeShip(coord, length) {
     const shipOne = new Ship(length);
-  
+
     const coordsArray = this.shipCoordinatesHorizontal(coord, length);
-    let coordToCheck = coordsArray.pop();
+    if (coordsArray === null) return null
+    
+    let coordToCheck = coordsArray.shift();
 
     while (coordsArray.length !== 0) {
       for (let i = 0; i < this.array.length; i++) {
         if (this.array[i].data === coordToCheck) {
-          coordToCheck = coordsArray.shift();
           this.array[i].ship = shipOne;
+          coordToCheck = coordsArray.shift();
         }
       }
     }
   }
 
   shipCoordinatesHorizontal(coord, length) {
+    if ((parseFloat(coord[1]) + length) > 10) return null;
     const coordArray = [];
     for (let i = 0; i < length; i++) {
       coordArray.push(coord[0] + (parseFloat(coord[1]) + i));
