@@ -1,8 +1,27 @@
 body {
   margin: 0;
   padding: 0;
+
+  display: flex;
+  gap: 2rem;
 }
 
-div {
-  color: rgb(213, 128, 100);
+.player-one-container,
+.player-two-container {
+  height: 30vw;
+  width: 30vw;
+
+  display: grid;
+  grid-template-columns: repeat(10, auto);
+  grid-template-rows: repeat(10, auto);
+
+  border: 2px solid rgb(46, 46, 46);
+}
+
+.player-one-container > div,
+.player-two-container > div {
+  border: 1px solid rgb(46, 46, 46);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
