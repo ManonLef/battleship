@@ -68,13 +68,13 @@ it("5.2. if a ship is too long for valid placement vertically, return null durin
 });
 
 // ship overlap
-it("6.0. ship array should return null if it already has a ship there", () => {
+it("6.1. ship array should return null if it already has a ship there", () => {
   const board = new GameBoard();
   board.placeShip("b2", 5, "vertical");
   expect(board.checkOverlap(board.shipCoordinates("b2", 5, "horizontal"))).toBe(null)
 })
 
-it("6.1. ship array should return array if it doesn't have a ship there", () => {
+it("6.2. ship array should return array if it doesn't have a ship there", () => {
   const board = new GameBoard();
   board.placeShip("b2", 5, "vertical");
   expect(board.checkOverlap(board.shipCoordinates("a1", 5, "horizontal"))).toStrictEqual([
@@ -86,11 +86,26 @@ it("6.1. ship array should return array if it doesn't have a ship there", () => 
   ])
 })
 
-it("6.2. placeShip function should return null when placing a ship in occupied position", () => {
+it("6.3. placeShip function should return null when placing a ship in occupied position", () => {
   const board = new GameBoard();
   board.placeShip("b2", 5, "vertical");
   expect(board.placeShip("b2", 5, "horizontal")).toBe(null)
 })
+
+// attacks on board
+test("7.1. receiveAttack on b2 updates hit", () => {
+  const board = new GameBoard();
+  board.placeShip("b2", 5, "vertical");
+  board.receiveAttack("b2")
+  expect(board.array[11].hit).toBe(true)
+})
+
+test("7.2. receiveAttack on b2, if it has a ship, receiveAttack updates ships timesHit", () => {
+  const board = new GameBoard();
+  board.placeShip("b2", 5, "vertical");
+  board.receiveAttack("b2")
+  expect(board.array[11].ship.timesHit).toBe(1)
+});
 
 // constants to test
 const testTwo = [

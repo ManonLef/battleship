@@ -69,4 +69,14 @@ export default class GameBoard {
     }
     return array
   }
+
+  receiveAttack(coords) {
+    const cellIndex = this.array.findIndex(cell => cell.data === coords)
+    const cellHit = this.array[cellIndex]
+
+    cellHit.hit = true
+    if (cellHit.ship) {
+      cellHit.ship.hit()
+    }
+  }
 }
