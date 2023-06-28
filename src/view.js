@@ -1,14 +1,21 @@
-const containerOne = document.querySelector(".player-one-container")
-const containerTwo = document.querySelector(".player-two-container")
-
+const containerOne = document.querySelector(".player-one-container");
+const containerTwo = document.querySelector(".player-two-container");
 
 function renderGameBoard(array, player) {
-  array.forEach(item => () => {
-    const cell = document.createElement("div")
-    cell.setAttribute("data-coord", item.data)
-    cell.textContent = item.data
-    containerOne.append(cell)
-  })
+  let container = containerOne;
+  if (player === "playerTwo") container = containerTwo;
+
+  array.forEach((item) => {
+    createCell(item, container);
+  
+  });
 }
 
-export {renderGameBoard}
+function createCell(item, container) {
+  const cell = document.createElement("div");
+  cell.setAttribute("data-coord", item.data);
+  cell.textContent = item.data;
+  container.append(cell);
+}
+
+export { renderGameBoard };
