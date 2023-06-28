@@ -11,3 +11,4 @@
 ## 2023-06-28
 - added functionality to check if ships don't overlap. Found out there was an error in my validity check as well so fixed that (a5 horizontal still fits, but showed it wouldn't)
 - added functionality to attack a cell, then update it, then update the ship as well if it's there
+- added function to check if all ships on gameboard are sunk
