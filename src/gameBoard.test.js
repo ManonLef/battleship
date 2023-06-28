@@ -1,6 +1,6 @@
 import GameBoard from "./gameBoard";
 
-// Creating a new gameBoard each time seems superfluous but having one constant will alter the gameboard state for some tests and interfere with the next ones. 
+// Creating a new gameBoard each time seems superfluous but having one constant will alter the gameboard state for some tests and interfere with the next ones.
 
 // gameBoard array basic
 it("1.0. expect gameboard array to be generated as tested", () => {
@@ -35,12 +35,12 @@ it("3.2. expect gameboard to place ship length five at a1 to fill ship data for 
 
 it("3.3. if a ship is too long for valid placement horizontally, return null during array calculation", () => {
   const board = new GameBoard();
-  expect(board.shipCoordinates("b6", 5, "horizontal")).toBe(null)
+  expect(board.shipCoordinates("b7", 5, "horizontal")).toBe(null);
 });
 
 it("3.4. if a ship is too long for valid placement horizontally, return null during ship placement", () => {
   const board = new GameBoard();
-  expect(board.placeShip("b6", 5, "horizontal")).toBe(null)
+  expect(board.placeShip("b7", 5, "horizontal")).toBe(null);
 });
 
 // ship coordinates vertically
@@ -64,47 +64,88 @@ it("5.1. expect gameboard to place ship length five at b2 to fill ship data for 
 
 it("5.2. if a ship is too long for valid placement vertically, return null during ship placement", () => {
   const board = new GameBoard();
-  expect(board.placeShip("g5", 5, "vertical")).toBe(null)
+  expect(board.placeShip("g5", 5, "vertical")).toBe(null);
+});
+
+test("5.3. board keeps track of ships placed in array", () => {
+  const board = new GameBoard();
+  expect(board.ships.length).toBe(0), 
+  board.placeShip("b2", 5, "vertical");
+  expect(board.ships.length).toBe(1);
 });
 
 // ship overlap
 it("6.1. ship array should return null if it already has a ship there", () => {
   const board = new GameBoard();
   board.placeShip("b2", 5, "vertical");
-  expect(board.checkOverlap(board.shipCoordinates("b2", 5, "horizontal"))).toBe(null)
-})
+  expect(board.checkOverlap(board.shipCoordinates("b2", 5, "horizontal"))).toBe(
+    null
+  );
+});
 
 it("6.2. ship array should return array if it doesn't have a ship there", () => {
   const board = new GameBoard();
   board.placeShip("b2", 5, "vertical");
-  expect(board.checkOverlap(board.shipCoordinates("a1", 5, "horizontal"))).toStrictEqual([
-    "a1",
-    "a2",
-    "a3",
-    "a4",
-    "a5",
-  ])
-})
+  expect(
+    board.checkOverlap(board.shipCoordinates("a1", 5, "horizontal"))
+  ).toStrictEqual(["a1", "a2", "a3", "a4", "a5"]);
+});
 
 it("6.3. placeShip function should return null when placing a ship in occupied position", () => {
   const board = new GameBoard();
   board.placeShip("b2", 5, "vertical");
-  expect(board.placeShip("b2", 5, "horizontal")).toBe(null)
-})
+  expect(board.placeShip("b2", 5, "horizontal")).toBe(null);
+});
 
 // attacks on board
 test("7.1. receiveAttack on b2 updates hit", () => {
   const board = new GameBoard();
-  board.receiveAttack("b2")
-  expect(board.array[11].hit).toBe(true)
-})
+  board.receiveAttack("b2");
+  expect(board.array[11].hit).toBe(true);
+});
 
 test("7.2. receiveAttack on b2, if it has a ship, receiveAttack updates ships timesHit", () => {
   const board = new GameBoard();
   board.placeShip("b2", 5, "vertical");
-  board.receiveAttack("b2")
-  expect(board.array[11].ship.timesHit).toBe(1)
+  board.receiveAttack("b2");
+  expect(board.array[11].ship.timesHit).toBe(1);
 });
+
+// check if all ships have been sunk
+it("8.1. board will return false if no ships present", () => {
+  const board = new GameBoard();
+  expect(board.checkAllSunk()).toBe(false)
+})
+
+it("8.2. board will return false if some ships are not sunk yet", () => {
+  const board = new GameBoard();
+  board.placeShip("a1", 4, "vertical")
+  board.placeShip("a8", 3, "horizontal")
+
+  board.receiveAttack("a1")
+  board.receiveAttack("b1")
+  board.receiveAttack("c1")
+  board.receiveAttack("d1")
+
+
+  expect(board.checkAllSunk()).toBe(false)
+})
+
+it("8.3. board will return true if all of its ships are sunk", () => {
+  const board = new GameBoard();
+  board.placeShip("a1", 4, "vertical")
+  board.placeShip("a8", 3, "horizontal")
+
+  board.receiveAttack("a1")
+  board.receiveAttack("b1")
+  board.receiveAttack("c1")
+  board.receiveAttack("d1")
+  
+  board.receiveAttack("a8")
+  board.receiveAttack("a9")
+  board.receiveAttack("a10")
+  expect(board.checkAllSunk()).toBe(true)
+})
 
 // constants to test
 const testTwo = [
@@ -326,11 +367,11 @@ const testFour = [
   { data: "a10", hit: false, ship: null },
   { data: "b1", hit: false, ship: null },
   { data: "b2", hit: false, ship: null },
-  { data: "b3", hit: false, ship: { length: 5, sunk: false, timesHit: 0 }  },
-  { data: "b4", hit: false, ship: { length: 5, sunk: false, timesHit: 0 }  },
-  { data: "b5", hit: false, ship: { length: 5, sunk: false, timesHit: 0 }  },
-  { data: "b6", hit: false, ship: { length: 5, sunk: false, timesHit: 0 }  },
-  { data: "b7", hit: false, ship: { length: 5, sunk: false, timesHit: 0 }  },
+  { data: "b3", hit: false, ship: { length: 5, sunk: false, timesHit: 0 } },
+  { data: "b4", hit: false, ship: { length: 5, sunk: false, timesHit: 0 } },
+  { data: "b5", hit: false, ship: { length: 5, sunk: false, timesHit: 0 } },
+  { data: "b6", hit: false, ship: { length: 5, sunk: false, timesHit: 0 } },
+  { data: "b7", hit: false, ship: { length: 5, sunk: false, timesHit: 0 } },
   { data: "b8", hit: false, ship: null },
   { data: "b9", hit: false, ship: null },
   { data: "b10", hit: false, ship: null },

@@ -83,4 +83,13 @@ export default class GameBoard {
       cellHit.ship.hit();
     }
   }
+
+  checkAllSunk() {
+    if (this.ships.length === 0) return false;
+    for (let i = 0; i < this.ships.length; i++) {
+      this.ships[i].isSunk()
+      if (this.ships[i].sunk === false) return false;
+    }
+    return true;
+  }
 }
