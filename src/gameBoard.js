@@ -26,7 +26,7 @@ export default class GameBoard {
   placeShip(coord, length, orientation) {
     const shipOne = new Ship(length);
 
-    const coordsArray = this.shipCoordinates(coord, length, orientation);
+    const coordsArray = this.checkOverlap(this.shipCoordinates(coord, length, orientation));
     if (coordsArray === null) return null;
 
     let coordToCheck = coordsArray.shift();
@@ -59,5 +59,14 @@ export default class GameBoard {
       }
     }
     return coordArray;
+  }
+
+  checkOverlap(array) {
+    if (array === null) return null
+    for (let i = 0; i < array.length; i++) {
+      const cell = this.array.find(coord => coord.data === array[i])
+      if (cell.ship !== null) return null
+    }
+    return array
   }
 }

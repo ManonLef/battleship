@@ -1,5 +1,7 @@
 import GameBoard from "./gameBoard";
 
+// Creating a new gameBoard each time seems superfluous but having one constant will alter the gameboard state for some tests and interfere with the next ones. 
+
 // gameBoard array basic
 it("1.0. expect gameboard array to be generated as tested", () => {
   const board = new GameBoard();
@@ -64,6 +66,31 @@ it("5.2. if a ship is too long for valid placement vertically, return null durin
   const board = new GameBoard();
   expect(board.placeShip("g5", 5, "vertical")).toBe(null)
 });
+
+// ship overlap
+it("6.0. ship array should return null if it already has a ship there", () => {
+  const board = new GameBoard();
+  board.placeShip("b2", 5, "vertical");
+  expect(board.checkOverlap(board.shipCoordinates("b2", 5, "horizontal"))).toBe(null)
+})
+
+it("6.1. ship array should return array if it doesn't have a ship there", () => {
+  const board = new GameBoard();
+  board.placeShip("b2", 5, "vertical");
+  expect(board.checkOverlap(board.shipCoordinates("a1", 5, "horizontal"))).toStrictEqual([
+    "a1",
+    "a2",
+    "a3",
+    "a4",
+    "a5",
+  ])
+})
+
+it("6.2. placeShip function should return null when placing a ship in occupied position", () => {
+  const board = new GameBoard();
+  board.placeShip("b2", 5, "vertical");
+  expect(board.placeShip("b2", 5, "horizontal")).toBe(null)
+})
 
 // constants to test
 const testTwo = [
