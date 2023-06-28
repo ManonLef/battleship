@@ -75,7 +75,7 @@ export default class GameBoard {
     const cellHit = this.array[cellIndex]
 
     cellHit.hit = true
-    if (cellHit.ship) {
+    if (cellHit.ship !== null) {
       cellHit.ship.hit()
     }
   }

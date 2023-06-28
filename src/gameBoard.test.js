@@ -95,7 +95,6 @@ it("6.3. placeShip function should return null when placing a ship in occupied p
 // attacks on board
 test("7.1. receiveAttack on b2 updates hit", () => {
   const board = new GameBoard();
-  board.placeShip("b2", 5, "vertical");
   board.receiveAttack("b2")
   expect(board.array[11].hit).toBe(true)
 })
