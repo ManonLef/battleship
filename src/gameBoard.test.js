@@ -9,7 +9,7 @@ it("1.0. expect gameboard array to be generated as tested", () => {
 });
 
 // ship coordinates horizontally
-it("2.0. expect ship coordinates horizantally calculated", () => {
+it("2.0. expect ship coordinates horizontally calculated", () => {
   const board = new GameBoard();
   expect(board.shipCoordinates("a1", 5, "horizontal")).toStrictEqual([
     "a1",
