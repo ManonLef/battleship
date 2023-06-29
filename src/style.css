@@ -1,21 +1,24 @@
 body {
+  height: 100vh;
   margin: 0;
   padding: 0;
 
   display: flex;
   gap: 2rem;
+
+  justify-content: center;
+  align-items: center;
 }
 
 .player-one-container,
 .player-two-container {
-  height: 30vw;
-  width: 30vw;
-
   display: grid;
-  grid-template-columns: repeat(10, auto);
-  grid-template-rows: repeat(10, auto);
+  grid-template-columns: repeat(10, 2rem);
+  grid-template-rows: repeat(10, 2rem);
 
-  border: 2px solid rgb(46, 46, 46);
+  border: 1px solid rgb(46, 46, 46);
+
+  color: rgb(159, 159, 159);
 }
 
 .player-one-container > div,
@@ -24,4 +27,9 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor:default;
+}
+
+.player-two-container > div {
+  cursor: pointer;
 }
