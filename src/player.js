@@ -3,7 +3,7 @@ import GameBoard from "./gameBoard";
 export default class Player {
   constructor() {
     this.board = new GameBoard();
-    this.aiOpponentBoard = new GameBoard().array;
+    this.OpponentBoard = new GameBoard().array;
   }
 
   attackEnemy(enemy, coord) {
@@ -11,10 +11,10 @@ export default class Player {
   }
 
   aiAttack(enemy) {
-    const randomCoord = Math.floor(Math.random() * this.aiOpponentBoard.length);
-    const cell = this.aiOpponentBoard[randomCoord];
+    const randomCoord = Math.floor(Math.random() * this.OpponentBoard.length);
+    const cell = this.OpponentBoard[randomCoord];
     
     this.attackEnemy(enemy, cell.data);
-    this.aiOpponentBoard.splice(randomCoord, 1);
+    this.OpponentBoard.splice(randomCoord, 1);
   }
 }

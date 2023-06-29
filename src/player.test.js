@@ -16,7 +16,7 @@ test("1.2. when AI attack, it will update it's own opponentboard", () => {
   for (let i = 0; i <= 99; i++) {
     ai.aiAttack(human);
   }
-  expect(ai.aiOpponentBoard.length).toBe(0);
+  expect(ai.OpponentBoard.length).toBe(0);
 });
 
 test("1.3. when AI attack 99 times, all opponent cells will be hit", () => {
