@@ -31,7 +31,7 @@ export default class GameBoard {
       this.shipCoordinates(coord, length, orientation)
     );
     if (coordsArray === null) return null;
-
+    
     let coordToCheck = coordsArray.shift();
 
     while (coordsArray.length !== 0) {
@@ -83,7 +83,9 @@ export default class GameBoard {
     if (cellHit.ship !== null) {
       cellHit.ship.hit();
       cellHit.ship.isSunk();
+      return(cellHit.ship.sunk)
     }
+    return null
   }
 
   checkAllSunk() {

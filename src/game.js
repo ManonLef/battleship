@@ -25,24 +25,16 @@ renderGameBoard(human.board.array, "playerOne");
 renderGameBoard(human.OpponentBoard, "playerTwo");
 
 // the game can begin now that the ships are placed.
-let currentPlayer = human;
-let currentEnemy = ai;
-
 function game() {
   // breaks out when one of the players has all ships sunk
   if (ai.board.checkAllSunk() || human.board.checkAllSunk()) return endGame();
 
   // only when the currentplayer is human, we should register clicks
-
+  addAttackListeners();
   // when the human player click a cell in the opponent board, it should register
   // an attack there on the ai. this is done with the above listener
-
+  window.addEventListener("playerMoveMade", switchToAi);
   // --> currentPlayer attackEnemy coord
-  if (currentPlayer === human) addAttackListeners();
-  window.addEventListener("moveMade", () => {
-    switchPlayer()
-    removeEventlisteners();
-  })
 }
 
 // --> else set currentPlayer OpponentBoard coord hit true
@@ -54,19 +46,37 @@ function game() {
 // add marker red to indicate there is a ship there
 // looks like following classes may be needed: no-ship, ship-hit, ship-sunk
 
+function switchToAi(event) {
+  console.log(event);
+  removeEventlisteners();
+  const aiHit = ai.aiAttack(human);
+  console.log(aiHit)
+  game();
+}
+
 function endGame() {
   console.log("someone's ships are all sunk");
 }
 
-function switchPlayer() {
-  if (currentPlayer === human) {
-    currentPlayer = ai;
-    currentEnemy = human;
-  } else {
-    currentPlayer = human;
-    currentEnemy = ai;
+function humanPlay() {
+  const coord = this.getAttribute("data-coord");
+  // --> if OpponentBoard coord is already hit, do nothing
+  try {
+    dispatchEvent(
+      new CustomEvent("playerMoveMade", {
+        detail: {
+          sunk: human.attackEnemy(ai, coord),
+          coord: coord,
+        },
+      })
+    );
+  } catch (e) {
+    console.error(e);
+    return null;
   }
+  console.log(ai.board);
 }
+
 
 function addAttackListeners() {
   document
@@ -80,18 +90,4 @@ function removeEventlisteners() {
     .forEach((cell) => cell.removeEventListener("mousedown", humanPlay));
 }
 
-function humanPlay(event) {
-  const coord = this.getAttribute("data-coord");
-  // --> if OpponentBoard coord is already hit, do nothing
-  try {
-    human.attackEnemy(ai, coord);
-  } catch (e) {
-    console.error(e);
-    return null;
-  }
-  const humanComplete = new CustomEvent("moveMade", { detail: coord });
-  dispatchEvent(humanComplete)
-  console.log(ai.board);
-}
-
-game()
+game();

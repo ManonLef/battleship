@@ -7,7 +7,7 @@ export default class Player {
   }
 
   attackEnemy(enemy, coord) {
-    enemy.board.receiveAttack(coord);
+    return enemy.board.receiveAttack(coord);
   }
 
   aiAttack(enemy) {
@@ -16,5 +16,6 @@ export default class Player {
     
     this.attackEnemy(enemy, cell.data);
     this.OpponentBoard.splice(randomCoord, 1);
+    return cell.data
   }
 }
