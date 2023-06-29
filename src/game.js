@@ -28,6 +28,36 @@ renderGameBoard(human.OpponentBoard, "playerTwo");
 let currentPlayer = human;
 let currentEnemy = ai;
 
+function game() {
+  // breaks out when one of the players has all ships sunk
+  if (ai.board.checkAllSunk() || human.board.checkAllSunk()) return endGame();
+
+  // only when the currentplayer is human, we should register clicks
+
+  // when the human player click a cell in the opponent board, it should register
+  // an attack there on the ai. this is done with the above listener
+
+  // --> currentPlayer attackEnemy coord
+  if (currentPlayer === human) addAttackListeners();
+  window.addEventListener("moveMade", () => {
+    switchPlayer()
+    removeEventlisteners();
+  })
+}
+
+// --> else set currentPlayer OpponentBoard coord hit true
+// --> check OpponentBoard coord ship or not?
+// --> if ship was hit:
+//  --> check if it was sunk
+//  --> if sunk, change all coordinates of said ship to fill the whole square
+// --> if ship not hit:
+// add marker red to indicate there is a ship there
+// looks like following classes may be needed: no-ship, ship-hit, ship-sunk
+
+function endGame() {
+  console.log("someone's ships are all sunk");
+}
+
 function switchPlayer() {
   if (currentPlayer === human) {
     currentPlayer = ai;
@@ -38,26 +68,30 @@ function switchPlayer() {
   }
 }
 
-function addEventListeners() {
-  document.querySelectorAll(".ai-cell").forEach((cell) =>
-    cell.addEventListener("click", () => {
-      const coord = cell.getAttribute("data-coord");
-      human.attackEnemy(ai, coord);
-    })
-  );
+function addAttackListeners() {
+  document
+    .querySelectorAll(".ai-cell")
+    .forEach((cell) => cell.addEventListener("mousedown", humanPlay));
 }
 
-// when the human player click a cell in the opponent board, it should register
-// an attack there on the ai.
+function removeEventlisteners() {
+  document
+    .querySelectorAll(".ai-cell")
+    .forEach((cell) => cell.removeEventListener("mousedown", humanPlay));
+}
 
-// --> currentPlayer attackEnemy coord
+function humanPlay(event) {
+  const coord = this.getAttribute("data-coord");
+  // --> if OpponentBoard coord is already hit, do nothing
+  try {
+    human.attackEnemy(ai, coord);
+  } catch (e) {
+    console.error(e);
+    return null;
+  }
+  const humanComplete = new CustomEvent("moveMade", { detail: coord });
+  dispatchEvent(humanComplete)
+  console.log(ai.board);
+}
 
-// --> if OpponentBoard coord is already hit, do nothing
-// --> else set currentPlayer OpponentBoard coord hit true
-// --> check OpponentBoard coord ship or not?
-// --> if ship was hit:
-//  --> check if it was sunk
-//  --> if sunk, change all coordinates of said ship to fill the whole square
-// --> if ship not hit:
-// add marker red to indicate there is a ship there
-// looks like following classes may be needed: no-ship, ship-hit, ship-sunk
+game()
