@@ -10,14 +10,12 @@ human.board.placeShip("a8", 3, "vertical");
 human.board.placeShip("g9", 2, "vertical");
 human.board.placeShip("e1", 3, "horizontal");
 human.board.placeShip("f6", 4, "vertical");
-console.log(human.board);
 
 ai.board.placeShip("c2", 5, "horizontal");
 ai.board.placeShip("a8", 3, "vertical");
 ai.board.placeShip("g9", 2, "vertical");
 ai.board.placeShip("e1", 3, "horizontal");
 ai.board.placeShip("f6", 4, "vertical");
-console.log(ai.board);
 
 // render the human board left
 renderGameBoard(human.board.array, "playerOne");
@@ -40,15 +38,26 @@ function switchPlayer() {
   }
 }
 
+function addEventListeners() {
+  document.querySelectorAll(".ai-cell").forEach((cell) =>
+    cell.addEventListener("click", () => {
+      const coord = cell.getAttribute("data-coord");
+      human.attackEnemy(ai, coord);
+    })
+  );
+}
+
 // when the human player click a cell in the opponent board, it should register
 // an attack there on the ai.
+
 // --> currentPlayer attackEnemy coord
+
 // --> if OpponentBoard coord is already hit, do nothing
 // --> else set currentPlayer OpponentBoard coord hit true
 // --> check OpponentBoard coord ship or not?
 // --> if ship was hit:
-    //  --> check if it was sunk
-    //  --> if sunk, change all coordinates of said ship to fill the whole square
-// --> if ship not hit: 
-    // add marker red to indicate there is a ship there
+//  --> check if it was sunk
+//  --> if sunk, change all coordinates of said ship to fill the whole square
+// --> if ship not hit:
+// add marker red to indicate there is a ship there
 // looks like following classes may be needed: no-ship, ship-hit, ship-sunk
