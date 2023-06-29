@@ -30,6 +30,7 @@ export default class GameBoard {
     const coordsArray = this.checkOverlap(
       this.shipCoordinates(coord, length, orientation)
     );
+    console.log("place", coordsArray);
     if (coordsArray === null) return null;
 
     let coordToCheck = coordsArray.shift();
@@ -58,10 +59,12 @@ export default class GameBoard {
     if (orientation === "vertical") {
       const rowIndex = this.rows.findIndex((letter) => letter === coord[0]);
       if (rowIndex + length > 10) return null;
-      for (let i = rowIndex; i <= length; i += 1) {
+      for (let i = rowIndex; i < rowIndex + length; i += 1) {
         coordArray.push(this.rows[i] + coord[1]);
       }
     }
+    console.log("shipcoord", coordArray);
+
     return coordArray;
   }
 
