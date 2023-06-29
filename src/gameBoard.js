@@ -78,16 +78,17 @@ export default class GameBoard {
     const cellIndex = this.array.findIndex((cell) => cell.data === coords);
     const cellHit = this.array[cellIndex];
 
+    if (cellHit.hit === true) throw new Error("already hit")
     cellHit.hit = true;
     if (cellHit.ship !== null) {
       cellHit.ship.hit();
+      cellHit.ship.isSunk();
     }
   }
 
   checkAllSunk() {
     if (this.ships.length === 0) return false;
     for (let i = 0; i < this.ships.length; i += 1) {
-      this.ships[i].isSunk();
       if (this.ships[i].sunk === false) return false;
     }
     return true;
