@@ -49,9 +49,10 @@ function game() {
 function switchToAi(event) {
   console.log(event);
   removeEventlisteners();
-  const aiHit = ai.aiAttack(human);
-  console.log(aiHit)
-  game();
+  setTimeout(() => {
+    ai.aiAttack(human);
+    game();
+  }, 500);
 }
 
 function endGame() {
@@ -76,7 +77,6 @@ function humanPlay() {
   }
   console.log(ai.board);
 }
-
 
 function addAttackListeners() {
   document
