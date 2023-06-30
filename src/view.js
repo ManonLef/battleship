@@ -27,11 +27,17 @@ function checkShip(item) {
   else return false;
 }
 
-function renderPlayerEvent(event) {
+function renderEvent(event) {
   console.log("view", event);
-  const cell = document.querySelector(
-    `.ai-cell[data-coord="${event.detail.coord}"]`
-  );
+
+  let cell = "";
+  if (event.type === "playerMoveMade") {
+    cell = document.querySelector(
+      `.ai-cell[data-coord="${event.detail.coord}"]`
+    );
+  } else {
+    cell = document.querySelector(`[data-coord="${event.detail.coord}"]`);
+  }
 
   if (event.detail.sunk === null) {
     cell.classList.add("hit-water");
@@ -40,6 +46,7 @@ function renderPlayerEvent(event) {
   }
 }
 
-window.addEventListener("playerMoveMade", renderPlayerEvent);
+window.addEventListener("aiMoveMade", renderEvent);
+window.addEventListener("playerMoveMade", renderEvent);
 
 export { renderGameBoard };
