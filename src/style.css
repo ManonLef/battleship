@@ -33,3 +33,10 @@ body {
 .player-two-container > div {
   cursor: pointer;
 }
+
+.hit-water {
+  background-color: aqua;
+}
+.hit-ship {
+  background-color: red;
+}

@@ -7,7 +7,6 @@ function renderGameBoard(array, player) {
 
   array.forEach((item) => {
     createCell(item, container, player);
-    
   });
 }
 
@@ -16,16 +15,31 @@ function createCell(item, container, player) {
   cell.setAttribute("data-coord", item.data);
   cell.textContent = item.data;
 
-  if (player === "playerTwo") cell.className = "ai-cell"
+  if (player === "playerTwo") cell.className = "ai-cell";
 
-  if (checkShip(item)) cell.style.backgroundColor = "gray"
-  
+  if (checkShip(item)) cell.style.backgroundColor = "gray";
+
   container.append(cell);
 }
 
 function checkShip(item) {
-  if(item.ship !== null) return true
-  else return false
+  if (item.ship !== null) return true;
+  else return false;
 }
+
+function renderPlayerEvent(event) {
+  console.log("view", event);
+  const cell = document.querySelector(
+    `.ai-cell[data-coord="${event.detail.coord}"]`
+  );
+
+  if (event.detail.sunk === null) {
+    cell.classList.add("hit-water");
+  } else {
+    cell.classList.add("hit-ship");
+  }
+}
+
+window.addEventListener("playerMoveMade", renderPlayerEvent);
 
 export { renderGameBoard };
