@@ -13,9 +13,16 @@ export default class Player {
   aiAttack(enemy) {
     const randomCoord = Math.floor(Math.random() * this.OpponentBoard.length);
     const cell = this.OpponentBoard[randomCoord];
-    
-    this.attackEnemy(enemy, cell.data);
+
+    dispatchEvent(
+      new CustomEvent("aiMoveMade", {
+        detail: {
+          sunk: this.attackEnemy(enemy, cell.data),
+          coord: cell.data,
+        },
+      })
+    );
+
     this.OpponentBoard.splice(randomCoord, 1);
-    return cell.data
   }
 }
