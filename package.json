@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "jest --watch src/player.test.js",
+    "test": "jest --watch src/gameBoard.test.js",
     "watch": "webpack --watch",
     "build": "webpack"
   },

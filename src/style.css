@@ -27,7 +27,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  cursor:default;
+  cursor: default;
 }
 
 .player-two-container > div {
@@ -37,6 +37,11 @@ body {
 .hit-water {
   background-color: aqua;
 }
-.hit-ship {
-  background-color: red;
+
+div.hit-ship {
+  background-color: red !important;
+}
+
+.hit-ship.sunk {
+  border-color: red;
 }

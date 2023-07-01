@@ -12,3 +12,13 @@
 - added functionality to check if ships don't overlap. Found out there was an error in my validity check as well so fixed that (a5 horizontal still fits, but showed it wouldn't)
 - added functionality to attack a cell, then update it, then update the ship as well if it's there
 - added function to check if all ships on gameboard are sunk
+- Created the player and ai methods and started the UI boards
+
+## 2023-06-29 and 2023-06-30
+- added visuals and custom events to emit player and Ai Turn
+- [ ] put the added functions from game inside their own module
+- [x] add all coordinates inside placed ship so when it's sunk, it can be marked in full
+
+## 2023-07-01
+- 2 checks fail because `dispatchEvent` is not defined
+- [ ] research difference in Jest between `test` and `it`

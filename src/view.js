@@ -24,7 +24,7 @@ function createCell(item, container, player) {
 
 function checkShip(item) {
   if (item.ship !== null) return true;
-  else return false;
+  return false;
 }
 
 function renderEvent(event) {
@@ -39,10 +39,21 @@ function renderEvent(event) {
     cell = document.querySelector(`[data-coord="${event.detail.coord}"]`);
   }
 
-  if (event.detail.sunk === null) {
+  console.log(event.detail.sunk);
+  if (event.detail.sunk == null) {
     cell.classList.add("hit-water");
-  } else {
+  } else if (event.detail.sunk[0] === false) cell.classList.add("hit-ship");
+  else {
     cell.classList.add("hit-ship");
+    event.detail.sunk[1].forEach((coord) => {
+      if (event.type === "playerMoveMade") {
+        document
+          .querySelector(`.ai-cell[data-coord="${coord}"]`)
+          .classList.add("sunk");
+      } else {
+        document.querySelector(`[data-coord="${coord}"]`).classList.add("sunk");
+      }
+    });
   }
 }
 
