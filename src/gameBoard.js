@@ -32,13 +32,16 @@ export default class GameBoard {
     );
     if (coordsArray === null) return null;
     
-    let coordToCheck = coordsArray.shift();
+    ship.coords = coordsArray
 
-    while (coordsArray.length !== 0) {
+    const arrCopy = [...coordsArray]
+    let coordToCheck = arrCopy.shift();
+
+    while (arrCopy.length !== 0) {
       for (let i = 0; i < this.array.length; i += 1) {
         if (this.array[i].data === coordToCheck) {
           this.array[i].ship = ship;
-          coordToCheck = coordsArray.shift();
+          coordToCheck = arrCopy.shift();
         }
       }
     }
