@@ -86,7 +86,7 @@ export default class GameBoard {
     if (cellHit.ship !== null) {
       cellHit.ship.hit();
       cellHit.ship.isSunk();
-      return(cellHit.ship.sunk)
+      return([cellHit.ship.sunk, cellHit.ship.coords])
     }
     return null
   }
