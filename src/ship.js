@@ -13,4 +13,9 @@ export default class Ship {
     if (this.length === this.timesHit) this.sunk = true
     else this.sunk = false
   }
+
+  setCoords(arr) {
+    this.coords = arr
+    return this.coords
+  }
 }

@@ -32,7 +32,7 @@ export default class GameBoard {
     );
     if (coordsArray === null) return null;
     
-    ship.coords = coordsArray
+    ship.setCoords(coordsArray)
 
     const arrCopy = [...coordsArray]
     let coordToCheck = arrCopy.shift();
