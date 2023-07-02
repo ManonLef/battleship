@@ -28,6 +28,7 @@ body {
   justify-content: center;
   align-items: center;
   cursor: default;
+  user-select: none;
 }
 
 .player-two-container > div {
