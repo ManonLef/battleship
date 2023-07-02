@@ -22,3 +22,12 @@
 ## 2023-07-01
 - 2 checks fail because `dispatchEvent` is not defined
 - [ ] research difference in Jest between `test` and `it`
+
+## 2023-07-02
+- research drag and drop
+- pseudo drag and drop and random ai place gameflow
+  - ai should randomly place ships
+  - game shouldn't start unless player ships are placed
+  - select ship and drag onto board. 
+  - Do this for all five ships
+  - Once player ships on board is 5, start game
