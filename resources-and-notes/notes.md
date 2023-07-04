@@ -28,6 +28,18 @@
 - pseudo drag and drop and random ai place gameflow
   - ai should randomly place ships
   - game shouldn't start unless player ships are placed
-  - select ship and drag onto board. 
+  - select ship and drag onto board. (or maybe present each ship in horizontal and vertical mode to place)
   - Do this for all five ships
   - Once player ships on board is 5, start game
+
+## 2023-07-04
+- I started with the drag last time.
+- Now I want to work on the drop.
+- Idea for drop behaviour:
+  - "ship" being dragged will contain the info needed
+  - once dropped, element it's dropped on must be registered
+  - fire customEvent and send data: `ship info` and `coordinates` which are needed for the `placeShip` function on the board.
+
+- Will still have to think how I want to check if all five ships have been placed. Maybe I can present them one by one and make it part of the game loop. 
+
+<!-- article I found that might be useful tomorrow: https://ralzohairi.medium.com/how-to-drag-drop-html-elements-and-files-using-javascript-d31d15279369 -->
