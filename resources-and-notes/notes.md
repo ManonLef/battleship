@@ -43,3 +43,8 @@
 - Will still have to think how I want to check if all five ships have been placed. Maybe I can present them one by one and make it part of the game loop. 
 
 <!-- article I found that might be useful tomorrow: https://ralzohairi.medium.com/how-to-drag-drop-html-elements-and-files-using-javascript-d31d15279369 -->
+
+## 2023-07-06
+- added random ship placement function
+- [ ] BUG: ai will make another move after all its ships are sunk. We want to make sure it doesnt.
+- perhaps return to activePlayer and pass that into game function
