@@ -5,11 +5,12 @@ const human = new Player();
 const ai = new Player();
 
 // populate the boards with ships
-human.board.placeShip("c2", 5, "horizontal");
-human.board.placeShip("a8", 3, "vertical");
-human.board.placeShip("g9", 2, "vertical");
-human.board.placeShip("e1", 3, "horizontal");
-human.board.placeShip("f6", 4, "vertical");
+// human.board.placeShip("c2", 5, "horizontal");
+// human.board.placeShip("a8", 3, "vertical");
+// human.board.placeShip("g9", 2, "vertical");
+// human.board.placeShip("e1", 3, "horizontal");
+// human.board.placeShip("f6", 4, "vertical");
+human.board.placeRandomShips()
 
 ai.board.placeShip("c2", 5, "horizontal");
 ai.board.placeShip("a8", 3, "vertical");

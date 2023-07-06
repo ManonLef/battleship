@@ -24,6 +24,23 @@ export default class GameBoard {
     return gameArray;
   }
 
+  placeRandomShips() {
+    const lengths = [2, 3, 3, 4, 5];
+    const orientations = ["horizontal", "vertical"];
+    while (lengths.length > 0) {
+      console.log(lengths.length)
+      const randomColumn = Math.floor(Math.random() * this.columns.length);
+      const randomRow = Math.floor(Math.random() * this.rows.length);
+      const randomCoord = this.rows[randomRow] + this.columns[randomColumn];
+      const randomOrientation =
+        orientations[Math.floor(Math.random() * orientations.length)];
+      
+      if (this.placeShip(randomCoord, lengths[(lengths.length) - 1], randomOrientation) !== null) {
+        lengths.pop()
+      };
+    }
+  }
+
   placeShip(coord, length, orientation) {
     const ship = new Ship(length);
 
@@ -31,10 +48,10 @@ export default class GameBoard {
       this.shipCoordinates(coord, length, orientation)
     );
     if (coordsArray === null) return null;
-    
-    ship.setCoords(coordsArray)
 
-    const arrCopy = [...coordsArray]
+    ship.setCoords(coordsArray);
+
+    const arrCopy = [...coordsArray];
     let coordToCheck = arrCopy.shift();
 
     while (arrCopy.length !== 0) {
@@ -81,14 +98,14 @@ export default class GameBoard {
     const cellIndex = this.array.findIndex((cell) => cell.data === coords);
     const cellHit = this.array[cellIndex];
 
-    if (cellHit.hit === true) throw new Error("already hit")
+    if (cellHit.hit === true) throw new Error("already hit");
     cellHit.hit = true;
     if (cellHit.ship !== null) {
       cellHit.ship.hit();
       cellHit.ship.isSunk();
-      return([cellHit.ship.sunk, cellHit.ship.coords])
+      return [cellHit.ship.sunk, cellHit.ship.coords];
     }
-    return null
+    return null;
   }
 
   checkAllSunk() {
