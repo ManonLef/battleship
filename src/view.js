@@ -23,6 +23,7 @@ function createCell(item, container, player) {
   
   // for dragging:
   cell.addEventListener("dragover", onDragOver)
+  cell.addEventListener("drop", onDrop)
 }
 
 function checkShip(item) {
@@ -78,16 +79,25 @@ function droppableShip(length, orientation) {
   const data = `${length}, ${orientation}`
   ship.addEventListener("dragstart", (event) => {
     console.log("drag started with data", data)
-    event.dataTransfer.setData("text/html", data)
+    event.dataTransfer.setData("text/plain", data)
     event.dataTransfer.effectAllowed = "all";
   })
 }
 
-// function for the game cells
-function onDragOver() {
+// functions for the game cells drag and drop
+function onDragOver(event) {
   // could be used to add a style to the box dragged over, like adding a border to the dropzone
+  event.preventDefault();
   const cellCoord = this.getAttribute("data-coord")
   console.log("something's dragging over me", cellCoord)
+}
+
+function onDrop(event) {
+  event.preventDefault();
+  const cellCoord = this.getAttribute("data-coord")
+  const data = event.dataTransfer.getData("text/plain")
+  const dataToFeed = JSON.stringify(`${cellCoord}, ${data}`)
+  console.log(dataToFeed)
 }
 
 droppableShip(3, "horizontal")
