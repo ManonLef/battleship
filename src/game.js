@@ -4,8 +4,14 @@ import { renderGameBoard } from "./view";
 const human = new Player();
 const ai = new Player();
 
-human.board.placeRandomShips()
-
+// human.board.placeRandomShips()
+window.addEventListener("shipDrop", (event) => {
+  console.log(event.detail.dropData)
+  const shipData = event.detail.dropData
+  human.board.placeShip(...shipData)
+  console.log(human.board)
+  renderGameBoard(human.board.array, "playerOne");
+})
 ai.board.placeRandomShips()
 
 // render the human board left

@@ -42,6 +42,7 @@ export default class GameBoard {
   }
 
   placeShip(coord, length, orientation) {
+    console.log("placing ship at", coord, length, orientation)
     const ship = new Ship(length);
 
     const coordsArray = this.checkOverlap(
