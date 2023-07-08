@@ -74,9 +74,9 @@ export default class GameBoard {
 
   shipCoordinates(coord, length, orientation) {
     const coordArray = [];
+    const column = coord.substr(1, coord.length - 1);
 
     if (orientation === "horizontal") {
-      const column = coord.substr(1, coord.length - 1);
       if (parseFloat(column) + parseFloat(length) -1 > 10) return null;
       for (let i = 0; i < length; i += 1) {
         coordArray.push(coord[0] + (parseFloat(column) + i));
@@ -85,9 +85,9 @@ export default class GameBoard {
 
     if (orientation === "vertical") {
       const rowIndex = this.rows.findIndex((letter) => letter === coord[0]);
-      if (rowIndex + length > 10) return null;
-      for (let i = rowIndex; i < rowIndex + length; i += 1) {
-        coordArray.push(this.rows[i] + coord[1]);
+      if (parseFloat(rowIndex) + parseFloat(length) > 10) return null;
+      for (let i = rowIndex; i < parseFloat(rowIndex) + parseFloat(length); i += 1) {
+        coordArray.push(this.rows[i] + column);
       }
     }
     return coordArray;
