@@ -60,4 +60,18 @@ function renderEvent(event) {
 window.addEventListener("aiMoveMade", renderEvent);
 window.addEventListener("playerMoveMade", renderEvent);
 
+// - drag and drop
+// - render a ship
+function droppableShip() {
+  const ship = document.createElement("div");
+  ship.style.backgroundColor = "red";
+  ship.textContent = "ship";
+  // set ship to be draggable
+  ship.setAttribute("draggable", "true");
+
+  document.querySelector("body").append(ship);
+}
+
+droppableShip()
+
 export { renderGameBoard };
