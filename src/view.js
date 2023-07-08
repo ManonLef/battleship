@@ -20,6 +20,9 @@ function createCell(item, container, player) {
   if (checkShip(item)) cell.style.backgroundColor = "gray";
 
   container.append(cell);
+  
+  // for dragging:
+  cell.addEventListener("dragover", onDragOver)
 }
 
 function checkShip(item) {
@@ -76,7 +79,15 @@ function droppableShip(length, orientation) {
   ship.addEventListener("dragstart", (event) => {
     console.log("drag started with data", data)
     event.dataTransfer.setData("text/html", data)
+    event.dataTransfer.effectAllowed = "all";
   })
+}
+
+// function for the game cells
+function onDragOver() {
+  // could be used to add a style to the box dragged over, like adding a border to the dropzone
+  const cellCoord = this.getAttribute("data-coord")
+  console.log("something's dragging over me", cellCoord)
 }
 
 droppableShip(3, "horizontal")
