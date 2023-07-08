@@ -28,21 +28,27 @@ export default class GameBoard {
     const lengths = [2, 3, 3, 4, 5];
     const orientations = ["horizontal", "vertical"];
     while (lengths.length > 0) {
-      console.log(lengths.length)
+      console.log(lengths.length);
       const randomColumn = Math.floor(Math.random() * this.columns.length);
       const randomRow = Math.floor(Math.random() * this.rows.length);
       const randomCoord = this.rows[randomRow] + this.columns[randomColumn];
       const randomOrientation =
         orientations[Math.floor(Math.random() * orientations.length)];
-      
-      if (this.placeShip(randomCoord, lengths[(lengths.length) - 1], randomOrientation) !== null) {
-        lengths.pop()
-      };
+
+      if (
+        this.placeShip(
+          randomCoord,
+          lengths[lengths.length - 1],
+          randomOrientation
+        ) !== null
+      ) {
+        lengths.pop();
+      }
     }
   }
 
   placeShip(coord, length, orientation) {
-    console.log("placing ship at", coord, length, orientation)
+    console.log("placing ship at", coord, length, orientation);
     const ship = new Ship(length);
 
     const coordsArray = this.checkOverlap(
@@ -70,9 +76,10 @@ export default class GameBoard {
     const coordArray = [];
 
     if (orientation === "horizontal") {
-      if (parseFloat(coord[1]) + length - 1 > 10) return null;
+      const column = coord.substr(1, coord.length - 1);
+      if (parseFloat(column) + parseFloat(length) -1 > 10) return null;
       for (let i = 0; i < length; i += 1) {
-        coordArray.push(coord[0] + (parseFloat(coord[1]) + i));
+        coordArray.push(coord[0] + (parseFloat(column) + i));
       }
     }
 
