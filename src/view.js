@@ -62,7 +62,7 @@ window.addEventListener("playerMoveMade", renderEvent);
 
 // - drag and drop
 // - render a ship
-function droppableShip() {
+function droppableShip(length, orientation) {
   const ship = document.createElement("div");
   ship.style.backgroundColor = "red";
   ship.textContent = "ship";
@@ -70,8 +70,15 @@ function droppableShip() {
   ship.setAttribute("draggable", "true");
 
   document.querySelector("body").append(ship);
+
+  // on drag start event
+  const data = `${length}, ${orientation}`
+  ship.addEventListener("dragstart", (event) => {
+    console.log("drag started with data", data)
+    event.dataTransfer.setData("text/html", data)
+  })
 }
 
-droppableShip()
+droppableShip(3, "horizontal")
 
 export { renderGameBoard };
