@@ -67,7 +67,7 @@ footer {
 }
 
 /* info header */
-.drop-header {
+.info-header {
   height: 3rem;
   width: 100%;
   pointer-events: none;
