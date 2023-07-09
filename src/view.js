@@ -5,14 +5,14 @@ const info = document.querySelector(".info");
 function renderGameBoard(array, player) {
   let container = containerOne;
   if (player === "playerTwo") container = containerTwo;
-  if (container === containerOne) removeSquares(container);
+  if (container === containerOne) removeChildren(container);
 
   array.forEach((item) => {
     createCell(item, container, player);
   });
 }
 
-function removeSquares(parent) {
+function removeChildren(parent) {
   while (parent.firstChild) {
     parent.removeChild(parent.firstChild);
   }
@@ -20,6 +20,7 @@ function removeSquares(parent) {
 
 function createCell(item, container, player) {
   const cell = document.createElement("div");
+  cell.className = "cell"
   cell.setAttribute("data-coord", item.data);
   cell.textContent = item.data;
 
@@ -140,11 +141,36 @@ function dropShipsInfo() {
   const shipContainer = document.createElement("div")
   shipContainer.className = "ship-container"
   info.append(shipContainer)
+
+  createDroppableShip(2, "horizontal")
+  createDroppableShip(2, "vertical")
 }
 
 // ship rendering:
+
 dropShipsInfo()
-createDroppableShip(3, "horizontal");
-createDroppableShip(3, "vertical")
+
+function placeNextShip(event) {
+  console.log("ship number", event.detail.dropped)
+  // remove ships and render new ones
+  removeChildren(document.querySelector(".ship-container"))
+  const ships = [3, 3, 4, 5]
+  const index = event.detail.dropped
+  // if all ships have been placed
+  if (event.detail.dropped === 4) {
+    gameStarted()
+    // remove ships
+    return window.removeEventListener("nextShip", placeNextShip)
+    // render something else
+  }
+  createDroppableShip(ships[index], "horizontal")
+  createDroppableShip(ships[index], "vertical")
+}
+
+function gameStarted() {
+  document.querySelector(".drop-header").textContent = "game in progress"
+}
+
+window.addEventListener("nextShip", placeNextShip)
 
 export { renderGameBoard };

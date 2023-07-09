@@ -69,6 +69,14 @@ export default class GameBoard {
         }
       }
     }
+    // emit event to decide which ship to place next
+    dispatchEvent(
+      new CustomEvent("nextShip", {
+        detail: {
+          dropped: this.ships.length,
+        },
+      })
+    );
     return this.ships.push(ship);
   }
 
@@ -77,7 +85,7 @@ export default class GameBoard {
     const column = coord.substr(1, coord.length - 1);
 
     if (orientation === "horizontal") {
-      if (parseFloat(column) + parseFloat(length) -1 > 10) return null;
+      if (parseFloat(column) + parseFloat(length) - 1 > 10) return null;
       for (let i = 0; i < length; i += 1) {
         coordArray.push(coord[0] + (parseFloat(column) + i));
       }
@@ -86,7 +94,11 @@ export default class GameBoard {
     if (orientation === "vertical") {
       const rowIndex = this.rows.findIndex((letter) => letter === coord[0]);
       if (parseFloat(rowIndex) + parseFloat(length) > 10) return null;
-      for (let i = rowIndex; i < parseFloat(rowIndex) + parseFloat(length); i += 1) {
+      for (
+        let i = rowIndex;
+        i < parseFloat(rowIndex) + parseFloat(length);
+        i += 1
+      ) {
         coordArray.push(this.rows[i] + column);
       }
     }
