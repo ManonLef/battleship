@@ -48,3 +48,19 @@
 - added random ship placement function
 - [ ] BUG: ai will make another move after all its ships are sunk. We want to make sure it doesnt.
 - perhaps return to activePlayer and pass that into game function
+
+## 2023-07-09
+- created the drag and drop functionality but not entirely sure how to go through it on game start, will have to figure that out still
+  - idea:
+  - present each ship to be dropped in both vertical and horizontal mode
+  - once placed, present next ship
+  - once all 5 are placed, game actually starts
+- idea: when a ship is placed, emit event with amount of ships placed as data
+- use ships placed to decide on next ship
+- consider renderGameBoard to be replaced by a different render that alos updates the info once the game started
+
+## Future features
+- [ ] reset board
+- [ ] smarter Ai
+- [ ] attack sounds
+= [ ] ships sunk counter or display
