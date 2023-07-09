@@ -20,13 +20,12 @@ function removeChildren(parent) {
 
 function createCell(item, container, player) {
   const cell = document.createElement("div");
-  cell.className = "cell"
+  cell.className = "cell";
   cell.setAttribute("data-coord", item.data);
-  cell.textContent = item.data;
 
   if (player === "playerTwo") cell.className = "ai-cell";
 
-  if (checkShip(item)) cell.style.backgroundColor = "gray";
+  if (checkShip(item)) cell.style.backgroundColor = "lightgray";
 
   container.append(cell);
 
@@ -54,20 +53,24 @@ function renderEvent(event) {
     cell = document.querySelector(`[data-coord="${event.detail.coord}"]`);
   }
 
+  // symbols: ﹌ / 〰
   console.log(event.detail.sunk);
   if (event.detail.sunk == null) {
     cell.classList.add("hit-water");
-  } else if (event.detail.sunk[0] === false) cell.classList.add("hit-ship");
-  else {
+    cell.textContent = "〰";
+  } else if (event.detail.sunk[0] === false) {
+    cell.classList.add("hit-ship")
+    cell.textContent = "✧"
+  } else {
     cell.classList.add("hit-ship");
     event.detail.sunk[1].forEach((coord) => {
       if (event.type === "playerMoveMade") {
-        document
-          .querySelector(`.ai-cell[data-coord="${coord}"]`)
-          .classList.add("sunk");
+        cell = document.querySelector(`.ai-cell[data-coord="${coord}"]`);
       } else {
-        document.querySelector(`[data-coord="${coord}"]`).classList.add("sunk");
+        cell = document.querySelector(`[data-coord="${coord}"]`);
       }
+      cell.classList.add("sunk");
+      cell.textContent = "✦"
     });
   }
 }
@@ -87,10 +90,10 @@ function createDroppableShip(length, orientation) {
   // styling:
   if (orientation === "horizontal") {
     ship.style.height = "2rem";
-    ship.style.width = length * 2 + "rem";  
+    ship.style.width = length * 2 + "rem";
   } else {
     ship.style.height = length * 2 + "rem";
-    ship.style.width = "2rem";  
+    ship.style.width = "2rem";
   }
 
   document.querySelector(".ship-container").append(ship);
@@ -132,44 +135,44 @@ function onDrop(event) {
 // create container for ship droppings
 // then create function which renders a ship based on the amount of ships already present
 function dropShipsInfo() {
-  const dropInfo = document.createElement("div")
-  dropInfo.className = "drop-header"
-  dropInfo.textContent = "Drag one of these ships to your waters"
-  info.append(dropInfo)
+  const dropInfo = document.createElement("div");
+  dropInfo.className = "drop-header";
+  dropInfo.textContent = "Drag one of these ships to your waters";
+  info.append(dropInfo);
 
-  const shipContainer = document.createElement("div")
-  shipContainer.className = "ship-container"
-  info.append(shipContainer)
+  const shipContainer = document.createElement("div");
+  shipContainer.className = "ship-container";
+  info.append(shipContainer);
 
-  createDroppableShip(2, "horizontal")
-  createDroppableShip(2, "vertical")
+  createDroppableShip(2, "horizontal");
+  createDroppableShip(2, "vertical");
 }
 
 // ship rendering:
 
-dropShipsInfo()
+dropShipsInfo();
 
 function placeNextShip(event) {
-  console.log("ship number", event.detail.dropped)
+  console.log("ship number", event.detail.dropped);
   // remove ships and render new ones
-  removeChildren(document.querySelector(".ship-container"))
-  const ships = [3, 3, 4, 5]
-  const index = event.detail.dropped
+  removeChildren(document.querySelector(".ship-container"));
+  const ships = [3, 3, 4, 5];
+  const index = event.detail.dropped;
   // if all ships have been placed
   if (event.detail.dropped === 4) {
-    gameStarted()
+    gameStarted();
     // remove ships
-    return window.removeEventListener("nextShip", placeNextShip)
+    return window.removeEventListener("nextShip", placeNextShip);
     // render something else
   }
-  createDroppableShip(ships[index], "horizontal")
-  createDroppableShip(ships[index], "vertical")
+  createDroppableShip(ships[index], "horizontal");
+  createDroppableShip(ships[index], "vertical");
 }
 
 function gameStarted() {
-  document.querySelector(".drop-header").textContent = "game in progress"
+  document.querySelector(".drop-header").textContent = "game in progress";
 }
 
-window.addEventListener("nextShip", placeNextShip)
+window.addEventListener("nextShip", placeNextShip);
 
 export { renderGameBoard };
