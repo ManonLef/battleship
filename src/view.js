@@ -93,7 +93,7 @@ function createDroppableShip(length, orientation) {
     ship.style.width = "2rem";  
   }
 
-  info.append(ship);
+  document.querySelector(".ship-container").append(ship);
 
   // on drag start event
   const data = `${length},${orientation}`;
@@ -131,9 +131,20 @@ function onDrop(event) {
 
 // create container for ship droppings
 // then create function which renders a ship based on the amount of ships already present
+function dropShipsInfo() {
+  const dropInfo = document.createElement("div")
+  dropInfo.className = "drop-header"
+  dropInfo.textContent = "Drag one of these ships to your waters"
+  info.append(dropInfo)
+
+  const shipContainer = document.createElement("div")
+  shipContainer.className = "ship-container"
+  info.append(shipContainer)
+}
 
 // ship rendering:
+dropShipsInfo()
 createDroppableShip(3, "horizontal");
-createDroppableShip(5, "vertical");
+createDroppableShip(3, "vertical")
 
 export { renderGameBoard };

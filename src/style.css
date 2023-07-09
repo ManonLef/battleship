@@ -49,6 +49,25 @@ div.hit-ship {
   border-color: red;
 }
 
+/* ship placement */
+.info {
+  grid-area: 2/1/3/3;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.drop-header {
+  text-align: center;
+}
+
+.ship-container {
+  display: flex; 
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
 .ship {
   background-color: pink;
 }
