@@ -4,7 +4,7 @@ const containerTwo = document.querySelector(".player-two-container");
 function renderGameBoard(array, player) {
   let container = containerOne;
   if (player === "playerTwo") container = containerTwo;
-  if (container === containerOne)   removeSquares(container);
+  if (container === containerOne) removeSquares(container);
 
   array.forEach((item) => {
     createCell(item, container, player);
@@ -75,7 +75,7 @@ window.addEventListener("playerMoveMade", renderEvent);
 
 // - drag and drop
 // - render a ship
-function droppableShip(length, orientation) {
+function createDroppableShip(length, orientation) {
   const ship = document.createElement("div");
   ship.style.backgroundColor = "red";
   ship.textContent = "ship";
@@ -103,6 +103,7 @@ function onDragOver(event) {
 
 function onDrop(event) {
   event.preventDefault();
+  console.log(event);
   const cellCoord = this.getAttribute("data-coord");
   const data = event.dataTransfer.getData("text/plain");
   const dataToFeed = `${cellCoord}, ${data}`;
@@ -117,6 +118,7 @@ function onDrop(event) {
   );
 }
 
-droppableShip(3, "horizontal");
+createDroppableShip(3, "horizontal");
+createDroppableShip(5, "vertical");
 
 export { renderGameBoard };
