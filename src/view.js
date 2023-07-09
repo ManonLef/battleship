@@ -1,5 +1,6 @@
 const containerOne = document.querySelector(".player-one-container");
 const containerTwo = document.querySelector(".player-two-container");
+const info = document.querySelector(".info");
 
 function renderGameBoard(array, player) {
   let container = containerOne;
@@ -77,12 +78,22 @@ window.addEventListener("playerMoveMade", renderEvent);
 // - render a ship
 function createDroppableShip(length, orientation) {
   const ship = document.createElement("div");
-  ship.style.backgroundColor = "red";
   ship.textContent = "ship";
   // set ship to be draggable
   ship.setAttribute("draggable", "true");
 
-  document.querySelector("body").append(ship);
+  ship.className = "ship";
+
+  // styling:
+  if (orientation === "horizontal") {
+    ship.style.height = "2rem";
+    ship.style.width = length * 2 + "rem";  
+  } else {
+    ship.style.height = length * 2 + "rem";
+    ship.style.width = "2rem";  
+  }
+
+  info.append(ship);
 
   // on drag start event
   const data = `${length},${orientation}`;
@@ -118,6 +129,10 @@ function onDrop(event) {
   );
 }
 
+// create container for ship droppings
+// then create function which renders a ship based on the amount of ships already present
+
+// ship rendering:
 createDroppableShip(3, "horizontal");
 createDroppableShip(5, "vertical");
 

@@ -3,7 +3,9 @@ body {
   margin: 0;
   padding: 0;
 
-  display: flex;
+  display: grid;
+  grid-template-columns: 20rem 20rem;
+  grid-template-rows: 20rem 10rem;
   gap: 2rem;
 
   justify-content: center;
@@ -45,4 +47,8 @@ div.hit-ship {
 
 .hit-ship.sunk {
   border-color: red;
+}
+
+.ship {
+  background-color: pink;
 }
