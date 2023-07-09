@@ -47,6 +47,17 @@ function switchToAi(event) {
 }
 
 function endGame() {
+  let winningMsg = ""
+
+  if (ai.board.checkAllSunk()) winningMsg = "You've won!"
+  else winningMsg ="The computer sunk all your pinnaces"
+  dispatchEvent(
+    new CustomEvent("end", {
+      detail: {
+        msg: winningMsg 
+      },
+    })
+  );
   console.log("someone's ships are all sunk");
 }
 
@@ -66,7 +77,6 @@ function humanPlay() {
     console.error(e);
     return null;
   }
-  console.log(ai.board);
 }
 
 function addAttackListeners() {

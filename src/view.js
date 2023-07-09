@@ -49,8 +49,10 @@ function renderEvent(event) {
     cell = document.querySelector(
       `.ai-cell[data-coord="${event.detail.coord}"]`
     );
+    updateInfo("it's the computer's turn")
   } else {
     cell = document.querySelector(`[data-coord="${event.detail.coord}"]`);
+    updateInfo("it's your turn to attack")
   }
 
   // symbols: ﹌ / 〰
@@ -134,9 +136,10 @@ function onDrop(event) {
 // then create function which renders a ship based on the amount of ships already present
 function dropShipsInfo() {
   const dropInfo = document.createElement("div");
-  dropInfo.className = "drop-header";
-  dropInfo.textContent = "Drag one of these ships to your waters";
+  dropInfo.className = "info-header";
   info.append(dropInfo);
+
+  updateInfo("Drag one of these ships to your waters")
 
   const shipContainer = document.createElement("div");
   shipContainer.className = "ship-container";
@@ -158,7 +161,7 @@ function placeNextShip(event) {
   const index = event.detail.dropped;
   // if all ships have been placed
   if (event.detail.dropped === 4) {
-    gameStarted();
+    updateInfo("attack your enemy")
     // remove ships
     return window.removeEventListener("nextShip", placeNextShip);
     // render something else
@@ -167,10 +170,15 @@ function placeNextShip(event) {
   createDroppableShip(ships[index], "vertical");
 }
 
-function gameStarted() {
-  document.querySelector(".drop-header").textContent = "game in progress";
+
+function updateInfo(msg) {
+  const header = document.querySelector(".info-header")
+  header.textContent = msg
 }
 
 window.addEventListener("nextShip", placeNextShip);
+window.addEventListener("end", (event) => {
+  updateInfo(event.detail.msg)
+});
 
 export { renderGameBoard };
