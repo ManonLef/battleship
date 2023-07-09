@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Anuphan:wght@100;200;300;400;500;600;700&display=swap");
+
 * {
   margin: 0;
   padding: 0;
@@ -14,11 +16,18 @@ body {
   background: linear-gradient(311deg, #ff4e9a 30%, #6156d8 100%);
   color: white;
   text-transform: uppercase;
+
+  font-family: "Anuphan", sans-serif;
+  letter-spacing: 2px;
+  font-size: 16px;
+  font-weight: 500;
 }
 
 /* header and footer */
 header,
 footer {
+  font-size: 18px;
+  font-weight: 600;
   display: flex;
   justify-content: center;
   align-items: center;
