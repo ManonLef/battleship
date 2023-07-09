@@ -4,13 +4,92 @@ body {
   padding: 0;
 
   display: grid;
+  grid-template-rows: 3rem 20rem auto 3rem;
+  gap: 2rem;
+}
+
+/* header and footer */
+header,
+footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: antiquewhite;
+}
+
+/* gameboards */
+.boards {
+  display: grid;
   grid-template-columns: 20rem 20rem;
-  grid-template-rows: 20rem 10rem;
   gap: 2rem;
 
   justify-content: center;
-  align-items: center;
 }
+
+/* gameboards still need mediaquery or wrap */
+
+.player-one-container,
+.player-two-container {
+  display: grid;
+  grid-template-columns: repeat(10, 2rem);
+  grid-template-rows: repeat(10, 2rem);
+
+  border: 1px solid rgb(46, 46, 46);
+
+  color: rgb(159, 159, 159);
+}
+
+.player-one-container > div,
+.player-two-container > div {
+  border: 1px solid rgb(46, 46, 46);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: default;
+  user-select: none;
+}
+
+/* info below */
+.info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* info header */
+.drop-header {
+  height: 3rem;
+  width: 100%;
+}
+/* ship placement */
+.ship {
+  background-color: pink;
+}
+
+/* ship container */
+.ship-container {
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  grid-template-columns: 1fr 1fr;
+}
+
+/* rendering hits */
+.hit-water {
+  background-color: aqua;
+}
+
+div.hit-ship {
+  background-color: red !important;
+}
+
+.hit-ship.sunk {
+  border-color: red;
+}
+
+/*
 
 .player-one-container,
 .player-two-container {
@@ -47,10 +126,10 @@ div.hit-ship {
 
 .hit-ship.sunk {
   border-color: red;
-}
+} */
 
 /* ship placement */
-.info {
+/* .info {
   grid-area: 2/1/3/3;
   display: flex;
   flex-direction: column;
@@ -70,4 +149,4 @@ div.hit-ship {
 
 .ship {
   background-color: pink;
-}
+} */
