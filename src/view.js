@@ -25,7 +25,7 @@ function createCell(item, container, player) {
 
   if (player === "playerTwo") cell.className = "ai-cell";
 
-  if (checkShip(item)) cell.style.backgroundColor = "lightgray";
+  if (checkShip(item)) cell.classList.add("my-ships")
 
   container.append(cell);
 
@@ -59,8 +59,8 @@ function renderEvent(event) {
     cell.classList.add("hit-water");
     cell.textContent = "〰";
   } else if (event.detail.sunk[0] === false) {
-    cell.classList.add("hit-ship")
-    cell.textContent = "✧"
+    cell.classList.add("hit-ship");
+    cell.textContent = "✧";
   } else {
     cell.classList.add("hit-ship");
     event.detail.sunk[1].forEach((coord) => {
@@ -70,7 +70,7 @@ function renderEvent(event) {
         cell = document.querySelector(`[data-coord="${coord}"]`);
       }
       cell.classList.add("sunk");
-      cell.textContent = "✦"
+      cell.textContent = "☠";
     });
   }
 }
@@ -78,8 +78,6 @@ function renderEvent(event) {
 window.addEventListener("aiMoveMade", renderEvent);
 window.addEventListener("playerMoveMade", renderEvent);
 
-// - drag and drop
-// - render a ship
 function createDroppableShip(length, orientation) {
   const ship = document.createElement("div");
   // set ship to be draggable
@@ -87,13 +85,14 @@ function createDroppableShip(length, orientation) {
 
   ship.className = "ship";
 
-  // styling:
-  if (orientation === "horizontal") {
-    ship.style.height = "2rem";
-    ship.style.width = length * 2 + "rem";
-  } else {
-    ship.style.height = length * 2 + "rem";
-    ship.style.width = "2rem";
+  if (orientation === "vertical") {
+    ship.style["flex-direction"] = "column";
+  }
+
+  for (let i = 0; i < length; i++) {
+    const cell = document.createElement("div");
+    cell.className = "ship-cell";
+    ship.append(cell);
   }
 
   document.querySelector(".ship-container").append(ship);
@@ -101,7 +100,6 @@ function createDroppableShip(length, orientation) {
   // on drag start event
   const data = `${length},${orientation}`;
   ship.addEventListener("dragstart", (event) => {
-    console.log("drag started with data", data);
     event.dataTransfer.setData("text/plain", data);
     event.dataTransfer.effectAllowed = "all";
   });
