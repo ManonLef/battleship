@@ -79,7 +79,6 @@ window.addEventListener("playerMoveMade", renderEvent);
 // - render a ship
 function createDroppableShip(length, orientation) {
   const ship = document.createElement("div");
-  ship.textContent = "ship";
   // set ship to be draggable
   ship.setAttribute("draggable", "true");
 
