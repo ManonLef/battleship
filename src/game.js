@@ -4,42 +4,42 @@ import { renderGameBoard } from "./view";
 const human = new Player();
 const ai = new Player();
 
-// human.board.placeRandomShips()
-window.addEventListener("shipDrop", (event) => {
+// render the boards
+renderGameBoard(human.board.array, "playerOne");
+renderGameBoard(human.OpponentBoard, "playerTwo");
+
+// human has to place all ships before game really starts
+window.addEventListener("shipDrop", humanPlacing)
+
+function humanPlacing(event) {
   const shipData = event.detail.dropData
   human.board.placeShip(...shipData)
-  console.log(human.board)
   renderGameBoard(human.board.array, "playerOne");
   if (human.board.ships.length === 5) {
-    // start game
-    // remove this event listener
-    // remove the ships from view and use bottom as info for game
-    ai.board.placeRandomShips()
-    game()
+    startGame()
   }
-})
+}
 
-// render the human board left
-renderGameBoard(human.board.array, "playerOne");
-
-// render the ai blank board to the right. This should not display any ships
-// since it belongs to the opponent and we have to guess
-renderGameBoard(human.OpponentBoard, "playerTwo");
+// clean up eventListeners and have Ai place its ships
+function startGame() {
+  window.removeEventListener("shipDrop", humanPlacing)
+  ai.board.placeRandomShips()
+  game()
+}
 
 // the game can begin now that the ships are placed.
 function game() {
   // breaks out when one of the players has all ships sunk
   if (ai.board.checkAllSunk() || human.board.checkAllSunk()) return endGame();
-
   // only when the currentplayer is human, we should register clicks
   addAttackListeners();
-
   window.addEventListener("playerMoveMade", switchToAi);
 }
 
 function switchToAi(event) {
   console.log(event);
   removeEventlisteners();
+  if (ai.board.checkAllSunk() || human.board.checkAllSunk()) return endGame();
   setTimeout(() => {
     ai.aiAttack(human);
     game();
