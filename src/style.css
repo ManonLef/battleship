@@ -40,7 +40,7 @@ footer {
 
 /* gameboards */
 .boards {
-  margin-top: 3rem;
+  margin-top: 2rem;
   display: grid;
   grid-template-columns: auto auto;
   gap: 4rem;
@@ -64,7 +64,6 @@ footer {
 
   text-align: center;
 }
-
 
 /* gameboards still need mediaquery or wrap */
 .player-one-container,
@@ -96,6 +95,7 @@ footer {
   align-items: center;
   text-align: center;
 
+  gap: 3rem;
   color: white;
   user-select: none;
 }
@@ -105,10 +105,18 @@ footer {
   height: 3rem;
   pointer-events: none;
 
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  padding: 0px 2rem;
+
+  color: white;
 }
+
 /* ship placement */
 .ship {
-  display:flex;
+  display: flex;
   gap: 3px;
 }
 
@@ -145,65 +153,3 @@ div.sunk {
   background-color: rgba(255, 255, 255, 0.5) !important;
   border: 1px solid rgb(255, 255, 255) !important;
 }
-
-/*
-
-.player-one-container,
-.player-two-container {
-  display: grid;
-  grid-template-columns: repeat(10, 2rem);
-  grid-template-rows: repeat(10, 2rem);
-
-  border: 1px solid rgb(46, 46, 46);
-
-  color: rgb(159, 159, 159);
-}
-
-.player-one-container > div,
-.player-two-container > div {
-  border: 1px solid rgb(46, 46, 46);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: default;
-  user-select: none;
-}
-
-.player-two-container > div {
-  cursor: pointer;
-}
-
-.hit-water {
-  background-color: aqua;
-}
-
-div.hit-ship {
-  background-color: red !important;
-}
-
-.hit-ship.sunk {
-  border-color: red;
-} */
-
-/* ship placement */
-/* .info {
-  grid-area: 2/1/3/3;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-
-.drop-header {
-  text-align: center;
-}
-
-.ship-container {
-  display: flex; 
-  align-items: center;
-  justify-content: center;
-  gap: 2rem;
-}
-
-.ship {
-  background-color: pink;
-} */
