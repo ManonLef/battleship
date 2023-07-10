@@ -16,12 +16,12 @@
 
 ## 2023-06-29 and 2023-06-30
 - added visuals and custom events to emit player and Ai Turn
-- [ ] put the added functions from game inside their own module
 - [x] add all coordinates inside placed ship so when it's sunk, it can be marked in full
 
 ## 2023-07-01
 - 2 checks fail because `dispatchEvent` is not defined
-- [ ] research difference in Jest between `test` and `it`
+- [x] research difference in Jest between `test` and `it`
+  - does the same thing, functionally the same. More readable if using 'it'
 
 ## 2023-07-02
 - research drag and drop
@@ -46,7 +46,7 @@
 
 ## 2023-07-06
 - added random ship placement function
-- [ ] BUG: ai will make another move after all its ships are sunk. We want to make sure it doesnt.
+- [x] BUG: ai will make another move after all its ships are sunk. We want to make sure it doesnt.
 - perhaps return to activePlayer and pass that into game function
 
 ## 2023-07-09
@@ -58,9 +58,18 @@
 - idea: when a ship is placed, emit event with amount of ships placed as data
 - use ships placed to decide on next ship
 - consider renderGameBoard to be replaced by a different render that alos updates the info once the game started
+- [x] BUG: ship sunk not working for ai and not finishing game either for ai win 
+
+- things left to do:
+- [ ] refactor and consider a controller
+- [ ] separation of concerns
 
 ## Future features
+- [ ] add random ship placement for player
+- [ ] change cursors based on board, hit before etc.
 - [ ] reset board
 - [ ] smarter Ai
 - [ ] attack sounds
-= [ ] ships sunk counter or display
+- [ ] ships sunk counter or display
+- [ ] update test cases to not break during dispatchEvent by creating a generic event
+- [ ] replay
