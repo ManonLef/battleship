@@ -28,7 +28,6 @@ export default class GameBoard {
     const lengths = [2, 3, 3, 4, 5];
     const orientations = ["horizontal", "vertical"];
     while (lengths.length > 0) {
-      console.log(lengths.length);
       const randomColumn = Math.floor(Math.random() * this.columns.length);
       const randomRow = Math.floor(Math.random() * this.rows.length);
       const randomCoord = this.rows[randomRow] + this.columns[randomColumn];
@@ -48,7 +47,6 @@ export default class GameBoard {
   }
 
   placeShip(coord, length, orientation) {
-    console.log("placing ship at", coord, length, orientation);
     const ship = new Ship(length);
 
     const coordsArray = this.checkOverlap(

@@ -31,13 +31,12 @@ function startGame() {
 function game() {
   // breaks out when one of the players has all ships sunk
   if (ai.board.checkAllSunk() || human.board.checkAllSunk()) return endGame();
-  // only when the currentplayer is human, we should register clicks
+  // only when the current Player is human, we should register clicks
   addAttackListeners();
   window.addEventListener("playerMoveMade", switchToAi);
 }
 
 function switchToAi(event) {
-  console.log(event);
   removeEventlisteners();
   if (ai.board.checkAllSunk() || human.board.checkAllSunk()) return endGame();
   setTimeout(() => {
@@ -58,7 +57,6 @@ function endGame() {
       },
     })
   );
-  console.log("someone's ships are all sunk");
 }
 
 function humanPlay() {
@@ -74,7 +72,8 @@ function humanPlay() {
       })
     );
   } catch (e) {
-    console.error(e);
+    // consider throwing this error in view
+    // console.error(e);
     return null;
   }
 }

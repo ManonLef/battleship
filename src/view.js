@@ -25,7 +25,7 @@ function createCell(item, container, player) {
 
   if (player === "playerTwo") cell.className = "ai-cell";
 
-  if (checkShip(item)) cell.classList.add("my-ships")
+  if (checkShip(item)) cell.classList.add("my-ships");
 
   container.append(cell);
 
@@ -42,21 +42,18 @@ function checkShip(item) {
 }
 
 function renderEvent(event) {
-  console.log("view", event);
-
   let cell = "";
   if (event.type === "playerMoveMade") {
     cell = document.querySelector(
       `.ai-cell[data-coord="${event.detail.coord}"]`
     );
-    updateInfo("it's the computer's turn")
+    updateInfo("it's the computer's turn");
   } else {
     cell = document.querySelector(`[data-coord="${event.detail.coord}"]`);
-    updateInfo("it's your turn to attack")
+    updateInfo("it's your turn to attack");
   }
 
   // symbols: ﹌ / 〰
-  console.log(event.detail.sunk);
   if (event.detail.sunk == null) {
     cell.classList.add("hit-water");
     cell.textContent = "〰";
@@ -111,18 +108,14 @@ function createDroppableShip(length, orientation) {
 function onDragOver(event) {
   // could be used to add a style to the box dragged over, like adding a border to the dropzone
   event.preventDefault();
-  const cellCoord = this.getAttribute("data-coord");
-  console.log("something's dragging over me", cellCoord);
 }
 
 function onDrop(event) {
   event.preventDefault();
-  console.log(event);
   const cellCoord = this.getAttribute("data-coord");
   const data = event.dataTransfer.getData("text/plain");
   const dataToFeed = `${cellCoord}, ${data}`;
   const dataArray = dataToFeed.split(",");
-  console.log(dataToFeed);
   dispatchEvent(
     new CustomEvent("shipDrop", {
       detail: {
@@ -139,7 +132,7 @@ function dropShipsInfo() {
   dropInfo.className = "info-header";
   info.append(dropInfo);
 
-  updateInfo("Drag one of these ships to your waters")
+  updateInfo("Drag one of these ships to your waters");
 
   const shipContainer = document.createElement("div");
   shipContainer.className = "ship-container";
@@ -154,14 +147,13 @@ function dropShipsInfo() {
 dropShipsInfo();
 
 function placeNextShip(event) {
-  console.log("ship number", event.detail.dropped);
   // remove ships and render new ones
   removeChildren(document.querySelector(".ship-container"));
   const ships = [3, 3, 4, 5];
   const index = event.detail.dropped;
   // if all ships have been placed
   if (event.detail.dropped === 4) {
-    updateInfo("attack your enemy")
+    updateInfo("attack your enemy");
     // remove ships
     return window.removeEventListener("nextShip", placeNextShip);
     // render something else
@@ -170,15 +162,14 @@ function placeNextShip(event) {
   createDroppableShip(ships[index], "vertical");
 }
 
-
 function updateInfo(msg) {
-  const header = document.querySelector(".info-header")
-  header.textContent = msg
+  const header = document.querySelector(".info-header");
+  header.textContent = msg;
 }
 
 window.addEventListener("nextShip", placeNextShip);
 window.addEventListener("end", (event) => {
-  updateInfo(event.detail.msg)
+  updateInfo(event.detail.msg);
 });
 
 export { renderGameBoard };
