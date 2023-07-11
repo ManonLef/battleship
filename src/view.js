@@ -116,7 +116,6 @@ function createDroppableShip(length, orientation) {
   const data = `${length},${orientation}`;
   ship.addEventListener("dragstart", (event) => {
     event.dataTransfer.setData("text/plain", data);
-    event.dataTransfer.effectAllowed = "all";
   });
 }
 
