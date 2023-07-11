@@ -149,21 +149,19 @@ function dropShipsInfo() {
 
   createDroppableShip(2, "horizontal");
   createDroppableShip(2, "vertical");
-
-  addRandomShipsButton()
 }
 
 function addRandomShipsButton() {
   const random = document.createElement("button");
-  random.textContent = "place random"
+  random.textContent = "place random";
   random.addEventListener("click", playerChoseRandom);
-  info.append(random)
+  info.append(random);
 }
 
 function playerChoseRandom() {
   emitEvent("randomShipsPlayer", { detail: null });
-  info.removeChild(info.lastChild)
-  updateInfo("Make your first move")
+  info.removeChild(info.lastChild);
+  updateInfo("Make your first move");
 }
 
 function placeNextShip(event) {
@@ -172,9 +170,7 @@ function placeNextShip(event) {
   const index = event.detail.dropped;
   // if all ships have been placed
   if (event.detail.dropped === 4) {
-    updateInfo("attack your enemy");
-     window.removeEventListener("shipPlaced", placeNextShip);
-    info.removeChild(info.lastChild)
+    endShipPlacement();
   }
   createDroppableShip(ships[index], "horizontal");
   createDroppableShip(ships[index], "vertical");
@@ -185,11 +181,30 @@ function updateInfo(msg) {
   header.textContent = msg;
 }
 
-window.addEventListener("shipPlaced", placeNextShip);
-window.addEventListener("end", (event) => {
-  updateInfo(event.detail.msg);
-});
-window.addEventListener("aiMoveMade", renderAttack);
-window.addEventListener("playerMoveMade", renderAttack);
+// starting game
+function gameStart() {
+  dropShipsInfo();
+  addRandomShipsButton();
+  window.addEventListener("shipPlaced", placeNextShip);
+}
 
-dropShipsInfo();
+// ending ship placement
+function endShipPlacement() {
+  updateInfo("attack your enemy");
+  window.removeEventListener("shipPlaced", placeNextShip);
+  info.removeChild(info.lastChild);
+  // add listeners for ai and player move renders plus endGame
+  window.addEventListener("aiMoveMade", renderAttack);
+  window.addEventListener("playerMoveMade", renderAttack);
+  window.addEventListener("end", (event) => {
+    updateInfo(event.detail.msg);
+  });
+}
+
+// 
+function removeTurnListeners() {
+  window.removeEventListener("aiMoveMade", renderAttack);
+  window.removeEventListener("playerMoveMade", renderAttack);
+}
+
+gameStart();
