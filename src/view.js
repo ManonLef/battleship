@@ -24,17 +24,18 @@ function createCell(item, container, player) {
   cell.setAttribute("data-coord", item.data);
 
   if (player === "ai") cell.className = "ai-cell";
-  else cell.className = "cell";
+  else {
+    cell.className = "cell";
+    addCellDragDropListeners(cell);
+  }
 
   if (hasShip(item)) cell.classList.add("my-ships");
-
   container.append(cell);
+}
 
-  // for dragging:
-  if (cell.className !== "ai-cell") {
-    cell.addEventListener("dragover", onDragOver);
-    cell.addEventListener("drop", onDrop);
-  }
+function addCellDragDropListeners(cell) {
+  cell.addEventListener("dragover", onDragOver);
+  cell.addEventListener("drop", onDrop);
 }
 
 function hasShip(item) {
@@ -43,36 +44,50 @@ function hasShip(item) {
 }
 
 function renderEvent(event) {
-  let cell = "";
+  let cell;
+  const coords = event.detail.coord;
+
   if (event.type === "playerMoveMade") {
-    cell = document.querySelector(
-      `.ai-cell[data-coord="${event.detail.coord}"]`
-    );
+    cell = document.querySelector(`.ai-cell[data-coord="${coords}"]`);
     updateInfo("it's the computer's turn");
   } else {
-    cell = document.querySelector(`[data-coord="${event.detail.coord}"]`);
+    cell = document.querySelector(`[data-coord="${coords}"]`);
     updateInfo("it's your turn to attack");
   }
 
-  // symbols: ﹌ / 〰
-  if (event.detail.sunk == null) {
-    cell.classList.add("hit-water");
-    cell.textContent = "〰";
-  } else if (event.detail.sunk[0] === false) {
-    cell.classList.add("hit-ship");
-    cell.textContent = "✧";
+  if (event.detail.sunk === null) {
+    hitWater(cell);
   } else {
-    cell.classList.add("hit-ship");
-    event.detail.sunk[1].forEach((coord) => {
-      if (event.type === "playerMoveMade") {
-        cell = document.querySelector(`.ai-cell[data-coord="${coord}"]`);
-      } else {
-        cell = document.querySelector(`[data-coord="${coord}"]`);
-      }
-      cell.classList.add("sunk");
-      cell.textContent = "☠";
-    });
+    hitShipNotSunk(cell);
+    if (event.detail.sunk[0] !== false) {
+      event.detail.sunk[1].forEach((coord) => {
+        if (event.type === "playerMoveMade") {
+          cell = document.querySelector(`.ai-cell[data-coord="${coord}"]`);
+        } else {
+          cell = document.querySelector(`[data-coord="${coord}"]`);
+        }
+        hitShipAndSunk(cell);
+      });
+    }
   }
+}
+
+function hitWater(cell) {
+  const cellToEdit = cell;
+  cellToEdit.classList.add("hit-water");
+  cellToEdit.textContent = "〰";
+}
+
+function hitShipNotSunk(cell) {
+  const cellToEdit = cell;
+  cellToEdit.classList.add("hit-ship");
+  cellToEdit.textContent = "✧";
+}
+
+function hitShipAndSunk(cell) {
+  const cellToEdit = cell;
+  cellToEdit.classList.add("sunk");
+  cellToEdit.textContent = "☠";
 }
 
 window.addEventListener("aiMoveMade", renderEvent);
