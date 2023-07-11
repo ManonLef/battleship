@@ -1,4 +1,5 @@
 import GameBoard from "./gameBoard";
+import emitEvent from "./dispatcher";
 
 export default class Player {
   constructor() {
@@ -7,6 +8,7 @@ export default class Player {
   }
 
   attackEnemy(enemy, coord) {
+    // returns null when not hit and otherwise an array with sunk and coords
     return enemy.board.receiveAttack(coord);
   }
 
@@ -14,14 +16,8 @@ export default class Player {
     const randomCoord = Math.floor(Math.random() * this.OpponentBoard.length);
     const cell = this.OpponentBoard[randomCoord];
 
-    dispatchEvent(
-      new CustomEvent("aiMoveMade", {
-        detail: {
-          sunk: this.attackEnemy(enemy, cell.data),
-          coord: cell.data,
-        },
-      })
-    );
+    const hitOrMiss = this.attackEnemy(enemy, cell.data);
+    emitEvent("aiMoveMade", { sunk: hitOrMiss, coord: cell.data });
 
     this.OpponentBoard.splice(randomCoord, 1);
   }
