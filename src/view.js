@@ -125,13 +125,8 @@ function onDrop(event) {
   const data = event.dataTransfer.getData("text/plain");
   const dataToFeed = `${cellCoord}, ${data}`;
   const dataArray = dataToFeed.split(",");
-  dispatchEvent(
-    new CustomEvent("shipDrop", {
-      detail: {
-        dropData: dataArray,
-      },
-    })
-  );
+
+  return emitEvent("shipDrop", { dropData: dataArray });
 }
 
 // create container for ship droppings
@@ -201,7 +196,7 @@ function endShipPlacement() {
   });
 }
 
-// 
+//
 function removeTurnListeners() {
   window.removeEventListener("aiMoveMade", renderAttack);
   window.removeEventListener("playerMoveMade", renderAttack);
