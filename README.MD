@@ -1,7 +1,9 @@
 # Pew Pew Pinnace
 
 ## Result
-[Try the Pew Pew Pinnace Game live here](https://manonlef.github.io/battleship/)![Preview of the project](./resources-and-notes/preview.png)
+[Try the Pew Pew Pinnace Game live here](https://manonlef.github.io/battleship/)
+
+![Preview of the project](./resources-and-notes/preview.png)
 
 ## About this project
 Before this project we had a module about TDD with Jest. I had to implement what I learned about TDD in this project
