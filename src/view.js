@@ -1,3 +1,5 @@
+import emitEvent from "./dispatcher";
+
 const containerOne = document.querySelector(".player-one-container");
 const containerTwo = document.querySelector(".player-two-container");
 const info = document.querySelector(".info");
@@ -147,6 +149,21 @@ function dropShipsInfo() {
 
   createDroppableShip(2, "horizontal");
   createDroppableShip(2, "vertical");
+
+  addRandomShipsButton()
+}
+
+function addRandomShipsButton() {
+  const random = document.createElement("button");
+  random.textContent = "place random"
+  random.addEventListener("click", playerChoseRandom);
+  info.append(random)
+}
+
+function playerChoseRandom() {
+  emitEvent("randomShipsPlayer", { detail: null });
+  info.removeChild(info.lastChild)
+  updateInfo("Make your first move")
 }
 
 function placeNextShip(event) {
@@ -156,10 +173,11 @@ function placeNextShip(event) {
   // if all ships have been placed
   if (event.detail.dropped === 4) {
     updateInfo("attack your enemy");
-    return window.removeEventListener("nextShip", placeNextShip);
+     window.removeEventListener("shipPlaced", placeNextShip);
+    info.removeChild(info.lastChild)
   }
   createDroppableShip(ships[index], "horizontal");
-  return createDroppableShip(ships[index], "vertical");
+  createDroppableShip(ships[index], "vertical");
 }
 
 function updateInfo(msg) {

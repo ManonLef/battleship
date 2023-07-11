@@ -1,6 +1,7 @@
 import Player from "./player";
 import renderBoards from "./view";
 import emitEvent from "./dispatcher";
+import GameBoard from "./gameBoard";
 
 const human = new Player();
 const ai = new Player();
@@ -10,6 +11,16 @@ renderBoards(human.board.array, human.OpponentBoard);
 
 // human has to place all ships before game really starts
 window.addEventListener("shipDrop", humanPlacing);
+window.addEventListener("randomShipsPlayer", placeRandom)
+
+function placeRandom() {
+  window.removeEventListener("randomShipsPlayer", placeRandom)
+  console.log("o hi random placer")
+  human.board = new GameBoard
+  human.board.placeRandomShips()
+  renderBoards(human.board.array, human.OpponentBoard);
+  startGame()
+}
 
 function humanPlacing(event) {
   const shipData = event.detail.dropData;
