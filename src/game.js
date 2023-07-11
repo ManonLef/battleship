@@ -15,23 +15,41 @@ function placeShips() {
 }
 
 function startGame() {
-  removeShipPlaceListeners()
+  removeShipPlaceListeners();
   ai.board.placeRandomShips();
-  game();
+  game("human");
 }
 
-function game() {
-  // breaks out when one of the players has all ships sunk
+function game(player = "ai") {
   if (checkWinner()) return endGame();
-  // only when the current Player is human, we should register clicks
-  addAttackListeners();
-  window.addEventListener("playerMoveMade", switchToAi);
+  if (player === "human") {
+    addAttackListeners();
+    addPlayerMoveListener();
+  } else {
+    removeAttackListeners();
+    removePlayerMoveListener();
+    setTimeout(() => {
+      ai.aiAttack(human);
+      game("human");
+    }, 500);
+  }
 }
 
 function checkWinner() {
-  if (ai.board.checkAllSunk() || human.board.checkAllSunk()) return true
-  return false
+  if (ai.board.checkAllSunk() || human.board.checkAllSunk()) return true;
+  return false;
 }
+
+function endGame() {
+  // remove listeners and consider showing option for new game
+  let winningMsg = "";
+
+  if (ai.board.checkAllSunk())
+    winningMsg = "You've sunk all your opponent's pinnaces!";
+  else winningMsg = "The computer sunk all your pinnaces";
+  emitEvent("end", { msg: winningMsg });
+}
+
 // listeners
 function addShipPlaceListeners() {
   window.addEventListener("shipDrop", humanPlacing);
@@ -43,8 +61,26 @@ function removeShipPlaceListeners() {
   window.removeEventListener("randomShipsPlayer", placeRandom);
 }
 
-// startup function
-placeShips();
+function addAttackListeners() {
+  document
+    .querySelectorAll(".ai-cell")
+    .forEach((cell) => cell.addEventListener("mousedown", humanPlay));
+}
+
+function removeAttackListeners() {
+  document
+    .querySelectorAll(".ai-cell")
+    .forEach((cell) => cell.removeEventListener("mousedown", humanPlay));
+}
+
+function addPlayerMoveListener() {
+  window.addEventListener("playerMoveMade", game);
+}
+
+function removePlayerMoveListener() {
+  window.removeEventListener("playerMoveMade", game);
+}
+
 
 // helpers for ship placement
 function placeRandom() {
@@ -64,25 +100,6 @@ function humanPlacing(event) {
   }
 }
 
-function switchToAi() {
-  removeEventlisteners();
-  if (ai.board.checkAllSunk() || human.board.checkAllSunk()) return endGame();
-  setTimeout(() => {
-    ai.aiAttack(human);
-    game();
-  }, 500);
-}
-
-function endGame() {
-  // remove listeners and consider showing option for new game
-  let winningMsg = "";
-
-  if (ai.board.checkAllSunk())
-    winningMsg = "You've sunk all your opponent's pinnaces!";
-  else winningMsg = "The computer sunk all your pinnaces";
-  emitEvent("end", { msg: winningMsg });
-}
-
 function humanPlay() {
   const coord = this.getAttribute("data-coord");
   try {
@@ -95,14 +112,5 @@ function humanPlay() {
   }
 }
 
-function addAttackListeners() {
-  document
-    .querySelectorAll(".ai-cell")
-    .forEach((cell) => cell.addEventListener("mousedown", humanPlay));
-}
-
-function removeEventlisteners() {
-  document
-    .querySelectorAll(".ai-cell")
-    .forEach((cell) => cell.removeEventListener("mousedown", humanPlay));
-}
+// startup function
+placeShips();
