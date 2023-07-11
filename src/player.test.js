@@ -1,7 +1,6 @@
 import Player from "./player";
 
-const human = new Player();
-const ai = new Player();
+// to pass the tests we have to replace the dispatcher function body for now
 
 test("1.1. expect human to attack computer a1 coordinate and update the hit", () => {
   const human = new Player();

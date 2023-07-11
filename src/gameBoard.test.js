@@ -1,6 +1,7 @@
 import GameBoard from "./gameBoard";
 
 // Creating a new gameBoard each time seems superfluous but having one constant will alter the gameboard state for some tests and interfere with the next ones.
+// to pass the tests we have to replace the dispatcher function body for now
 
 // gameBoard array basic
 it("1.0. expect gameboard array to be generated as tested", () => {
