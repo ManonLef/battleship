@@ -20,6 +20,18 @@ function startGame() {
   game();
 }
 
+function game() {
+  // breaks out when one of the players has all ships sunk
+  if (checkWinner()) return endGame();
+  // only when the current Player is human, we should register clicks
+  addAttackListeners();
+  window.addEventListener("playerMoveMade", switchToAi);
+}
+
+function checkWinner() {
+  if (ai.board.checkAllSunk() || human.board.checkAllSunk()) return true
+  return false
+}
 // listeners
 function addShipPlaceListeners() {
   window.addEventListener("shipDrop", humanPlacing);
@@ -34,6 +46,7 @@ function removeShipPlaceListeners() {
 // startup function
 placeShips();
 
+// helpers for ship placement
 function placeRandom() {
   window.removeEventListener("randomShipsPlayer", placeRandom);
   human.board = new GameBoard();
@@ -49,17 +62,6 @@ function humanPlacing(event) {
   if (human.board.ships.length === 5) {
     startGame();
   }
-}
-
-
-
-// the game can begin now that the ships are placed.
-function game() {
-  // breaks out when one of the players has all ships sunk
-  if (ai.board.checkAllSunk() || human.board.checkAllSunk()) return endGame();
-  // only when the current Player is human, we should register clicks
-  addAttackListeners();
-  window.addEventListener("playerMoveMade", switchToAi);
 }
 
 function switchToAi() {
