@@ -3,32 +3,43 @@ import renderBoards from "./view";
 import emitEvent from "./dispatcher";
 import GameBoard from "./gameBoard";
 
-const human = new Player();
-const ai = new Player();
+let human = new Player();
+let ai = new Player();
 
-function startNewGame() {
+// game flow
+function placeShips() {
+  human = new Player();
+  ai = new Player();
   renderBoards(human.board.array, human.OpponentBoard);
+  addShipPlaceListeners();
 }
 
+function startGame() {
+  removeShipPlaceListeners()
+  ai.board.placeRandomShips();
+  game();
+}
+
+// listeners
 function addShipPlaceListeners() {
   window.addEventListener("shipDrop", humanPlacing);
-  window.addEventListener("randomShipsPlayer", placeRandom)  
+  window.addEventListener("randomShipsPlayer", placeRandom);
 }
 
 function removeShipPlaceListeners() {
   window.removeEventListener("shipDrop", humanPlacing);
-  window.removeEventListener("randomShipsPlayer", placeRandom)  
+  window.removeEventListener("randomShipsPlayer", placeRandom);
 }
 
-startNewGame()
-// human has to place all ships before game really starts
+// startup function
+placeShips();
 
 function placeRandom() {
-  window.removeEventListener("randomShipsPlayer", placeRandom)
-  human.board = new GameBoard
-  human.board.placeRandomShips()
+  window.removeEventListener("randomShipsPlayer", placeRandom);
+  human.board = new GameBoard();
+  human.board.placeRandomShips();
   renderBoards(human.board.array, human.OpponentBoard);
-  startGame()
+  startGame();
 }
 
 function humanPlacing(event) {
@@ -40,12 +51,7 @@ function humanPlacing(event) {
   }
 }
 
-// clean up eventListeners and have Ai place its ships
-function startGame() {
-  window.removeEventListener("shipDrop", humanPlacing);
-  ai.board.placeRandomShips();
-  game();
-}
+
 
 // the game can begin now that the ships are placed.
 function game() {
@@ -66,6 +72,7 @@ function switchToAi() {
 }
 
 function endGame() {
+  // remove listeners and consider showing option for new game
   let winningMsg = "";
 
   if (ai.board.checkAllSunk())
