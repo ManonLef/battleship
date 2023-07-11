@@ -60,16 +60,13 @@
 - consider renderGameBoard to be replaced by a different render that alos updates the info once the game started
 - [x] BUG: ship sunk not working for ai and not finishing game either for ai win 
 
-- things left to do:
-- [ ] refactor and consider a controller
-- [ ] separation of concerns
-
 ## Future features
-- [ ] add random ship placement for player
+- [x] add random ship placement for player
 - [ ] change cursors based on board, hit before etc.
 - [ ] reset board
 - [ ] smarter Ai
 - [ ] attack sounds
 - [ ] ships sunk counter or display
-- [ ] update test cases to not break during dispatchEvent by creating a generic event
-- [ ] replay
+- [ ] replay after win or loss
+- [ ] add a controller to remove a bunch of things tied to the game loop
+- [ ] mock event emitter or add a JSDOM env
