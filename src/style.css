@@ -14,6 +14,9 @@ body {
   gap: 2rem;
 
   background: linear-gradient(311deg, #ff4e9a 30%, #6156d8 100%);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+
   color: white;
   text-transform: uppercase;
 
