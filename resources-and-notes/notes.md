@@ -70,3 +70,4 @@
 - [ ] replay after win or loss
 - [ ] add a controller to remove a bunch of things tied to the game loop
 - [ ] mock event emitter or add a JSDOM env
+- [ ] enhance styling
