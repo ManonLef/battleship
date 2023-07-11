@@ -25,7 +25,7 @@ function createCell(item, container, player) {
   if (player === "playerTwo") cell.className = "ai-cell";
   else cell.className = "cell";
 
-  if (checkShip(item)) cell.classList.add("my-ships");
+  if (hasShip(item)) cell.classList.add("my-ships");
 
   container.append(cell);
 
@@ -36,7 +36,7 @@ function createCell(item, container, player) {
   }
 }
 
-function checkShip(item) {
+function hasShip(item) {
   if (item.ship !== null) return true;
   return false;
 }
