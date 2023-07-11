@@ -88,7 +88,7 @@ function createDroppableShip(length, orientation) {
     ship.style["flex-direction"] = "column";
   }
 
-  for (let i = 0; i < length; i++) {
+  for (let i = 0; i < length; i += 1) {
     const cell = document.createElement("div");
     cell.className = "ship-cell";
     ship.append(cell);
