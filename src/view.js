@@ -2,7 +2,7 @@ const containerOne = document.querySelector(".player-one-container");
 const containerTwo = document.querySelector(".player-two-container");
 const info = document.querySelector(".info");
 
-function renderBoards(playerArray, aiArray) {
+export default function renderBoards(playerArray, aiArray) {
   removeChildren(containerOne);
 
   playerArray.forEach((item) => {
@@ -43,7 +43,7 @@ function hasShip(item) {
   return false;
 }
 
-function renderEvent(event) {
+function renderAttack(event) {
   let cell;
   const coords = event.detail.coord;
 
@@ -90,14 +90,9 @@ function hitShipAndSunk(cell) {
   cellToEdit.textContent = "☠";
 }
 
-window.addEventListener("aiMoveMade", renderEvent);
-window.addEventListener("playerMoveMade", renderEvent);
-
 function createDroppableShip(length, orientation) {
   const ship = document.createElement("div");
-  // set ship to be draggable
   ship.setAttribute("draggable", "true");
-
   ship.className = "ship";
 
   if (orientation === "vertical") {
@@ -112,16 +107,13 @@ function createDroppableShip(length, orientation) {
 
   document.querySelector(".ship-container").append(ship);
 
-  // on drag start event
   const data = `${length},${orientation}`;
   ship.addEventListener("dragstart", (event) => {
     event.dataTransfer.setData("text/plain", data);
   });
 }
 
-// functions for the game cells drag and drop
 function onDragOver(event) {
-  // could be used to add a style to the box dragged over, like adding a border to the dropzone
   event.preventDefault();
 }
 
@@ -157,24 +149,17 @@ function dropShipsInfo() {
   createDroppableShip(2, "vertical");
 }
 
-// ship rendering:
-
-dropShipsInfo();
-
 function placeNextShip(event) {
-  // remove ships and render new ones
   removeChildren(document.querySelector(".ship-container"));
   const ships = [3, 3, 4, 5];
   const index = event.detail.dropped;
   // if all ships have been placed
   if (event.detail.dropped === 4) {
     updateInfo("attack your enemy");
-    // remove ships
     return window.removeEventListener("nextShip", placeNextShip);
-    // render something else
   }
   createDroppableShip(ships[index], "horizontal");
-  createDroppableShip(ships[index], "vertical");
+  return createDroppableShip(ships[index], "vertical");
 }
 
 function updateInfo(msg) {
@@ -186,5 +171,7 @@ window.addEventListener("nextShip", placeNextShip);
 window.addEventListener("end", (event) => {
   updateInfo(event.detail.msg);
 });
+window.addEventListener("aiMoveMade", renderAttack);
+window.addEventListener("playerMoveMade", renderAttack);
 
-export { renderBoards };
+dropShipsInfo();
