@@ -6,16 +6,25 @@ import GameBoard from "./gameBoard";
 const human = new Player();
 const ai = new Player();
 
-// render the boards
-renderBoards(human.board.array, human.OpponentBoard);
+function startNewGame() {
+  renderBoards(human.board.array, human.OpponentBoard);
+}
 
+function addShipPlaceListeners() {
+  window.addEventListener("shipDrop", humanPlacing);
+  window.addEventListener("randomShipsPlayer", placeRandom)  
+}
+
+function removeShipPlaceListeners() {
+  window.removeEventListener("shipDrop", humanPlacing);
+  window.removeEventListener("randomShipsPlayer", placeRandom)  
+}
+
+startNewGame()
 // human has to place all ships before game really starts
-window.addEventListener("shipDrop", humanPlacing);
-window.addEventListener("randomShipsPlayer", placeRandom)
 
 function placeRandom() {
   window.removeEventListener("randomShipsPlayer", placeRandom)
-  console.log("o hi random placer")
   human.board = new GameBoard
   human.board.placeRandomShips()
   renderBoards(human.board.array, human.OpponentBoard);
@@ -67,15 +76,12 @@ function endGame() {
 
 function humanPlay() {
   const coord = this.getAttribute("data-coord");
-  // --> if OpponentBoard coord is already hit, do nothing
   try {
     emitEvent("playerMoveMade", {
       sunk: human.attackEnemy(ai, coord),
       coord: coord,
     });
   } catch (e) {
-    // consider throwing this error in view
-    // console.error(e);
     return null;
   }
 }
