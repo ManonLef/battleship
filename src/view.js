@@ -167,7 +167,7 @@ function updateInfo(msg) {
   header.textContent = msg;
 }
 
-window.addEventListener("nextShip", placeNextShip);
+window.addEventListener("shipPlaced", placeNextShip);
 window.addEventListener("end", (event) => {
   updateInfo(event.detail.msg);
 });

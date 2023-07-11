@@ -1,4 +1,5 @@
 import Ship from "./ship";
+import emitEvent from "./dispatcher";
 
 export default class GameBoard {
   constructor() {
@@ -68,13 +69,7 @@ export default class GameBoard {
       }
     }
     // emit event to decide which ship to place next
-    dispatchEvent(
-      new CustomEvent("nextShip", {
-        detail: {
-          dropped: this.ships.length,
-        },
-      })
-    );
+    emitEvent("shipPlaced", {dropped: this.ships.length})
     return this.ships.push(ship);
   }
 
