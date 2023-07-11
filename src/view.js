@@ -20,10 +20,10 @@ function removeChildren(parent) {
 
 function createCell(item, container, player) {
   const cell = document.createElement("div");
-  cell.className = "cell";
   cell.setAttribute("data-coord", item.data);
 
   if (player === "playerTwo") cell.className = "ai-cell";
+  else cell.className = "cell";
 
   if (checkShip(item)) cell.classList.add("my-ships");
 
