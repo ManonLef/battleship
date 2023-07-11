@@ -6,6 +6,7 @@ const info = document.querySelector(".info");
 
 export default function renderBoards(playerArray, aiArray) {
   removeChildren(containerOne);
+  removeChildren(containerTwo)
 
   playerArray.forEach((item) => {
     createCell(item, containerOne, "human");
@@ -148,7 +149,7 @@ function dropShipsInfo() {
 
 function addRandomShipsButton() {
   const random = document.createElement("button");
-  random.textContent = "place random";
+  random.textContent = "or click for random ships";
   random.addEventListener("click", playerChoseRandom);
   info.append(random);
 }
