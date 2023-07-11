@@ -2,13 +2,14 @@ const containerOne = document.querySelector(".player-one-container");
 const containerTwo = document.querySelector(".player-two-container");
 const info = document.querySelector(".info");
 
-function renderGameBoard(array, player) {
-  let container = containerOne;
-  if (player === "playerTwo") container = containerTwo;
-  if (container === containerOne) removeChildren(container);
+function renderBoards(playerArray, aiArray) {
+  removeChildren(containerOne);
 
-  array.forEach((item) => {
-    createCell(item, container, player);
+  playerArray.forEach((item) => {
+    createCell(item, containerOne, "human");
+  });
+  aiArray.forEach((item) => {
+    createCell(item, containerTwo, "ai");
   });
 }
 
@@ -22,7 +23,7 @@ function createCell(item, container, player) {
   const cell = document.createElement("div");
   cell.setAttribute("data-coord", item.data);
 
-  if (player === "playerTwo") cell.className = "ai-cell";
+  if (player === "ai") cell.className = "ai-cell";
   else cell.className = "cell";
 
   if (hasShip(item)) cell.classList.add("my-ships");
@@ -172,4 +173,4 @@ window.addEventListener("end", (event) => {
   updateInfo(event.detail.msg);
 });
 
-export { renderGameBoard };
+export { renderBoards };

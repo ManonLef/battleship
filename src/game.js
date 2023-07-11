@@ -1,12 +1,11 @@
 import Player from "./player";
-import { renderGameBoard } from "./view";
+import { renderBoards } from "./view";
 
 const human = new Player();
 const ai = new Player();
 
 // render the boards
-renderGameBoard(human.board.array, "playerOne");
-renderGameBoard(human.OpponentBoard, "playerTwo");
+renderBoards(human.board.array, human.OpponentBoard);
 
 // human has to place all ships before game really starts
 window.addEventListener("shipDrop", humanPlacing)
@@ -14,7 +13,7 @@ window.addEventListener("shipDrop", humanPlacing)
 function humanPlacing(event) {
   const shipData = event.detail.dropData
   human.board.placeShip(...shipData)
-  renderGameBoard(human.board.array, "playerOne");
+  renderBoards(human.board.array, human.OpponentBoard);
   if (human.board.ships.length === 5) {
     startGame()
   }
