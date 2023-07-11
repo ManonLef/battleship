@@ -1,5 +1,5 @@
 import Player from "./player";
-import { renderBoards } from "./view";
+import renderBoards from "./view";
 
 const human = new Player();
 const ai = new Player();
@@ -47,7 +47,7 @@ function switchToAi(event) {
 function endGame() {
   let winningMsg = ""
 
-  if (ai.board.checkAllSunk()) winningMsg = "You've won!"
+  if (ai.board.checkAllSunk()) winningMsg = "You've sunk all your opponent's pinnaces!"
   else winningMsg ="The computer sunk all your pinnaces"
   dispatchEvent(
     new CustomEvent("end", {
