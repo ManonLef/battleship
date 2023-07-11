@@ -191,12 +191,15 @@ function endShipPlacement() {
   // add listeners for ai and player move renders plus endGame
   window.addEventListener("aiMoveMade", renderAttack);
   window.addEventListener("playerMoveMade", renderAttack);
-  window.addEventListener("end", (event) => {
-    updateInfo(event.detail.msg);
-  });
+  window.addEventListener("end", endGame);
 }
 
-//
+// ending game
+function endGame(event) {
+  removeTurnListeners();
+  updateInfo(event.detail.msg);
+}
+
 function removeTurnListeners() {
   window.removeEventListener("aiMoveMade", renderAttack);
   window.removeEventListener("playerMoveMade", renderAttack);

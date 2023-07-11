@@ -69,7 +69,7 @@ export default class GameBoard {
       }
     }
     // emit event to decide which ship to place next
-    emitEvent("shipPlaced", {dropped: this.ships.length})
+    emitEvent("shipPlaced", { dropped: this.ships.length });
     return this.ships.push(ship);
   }
 

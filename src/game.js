@@ -81,7 +81,6 @@ function removePlayerMoveListener() {
   window.removeEventListener("playerMoveMade", game);
 }
 
-
 // helpers for ship placement
 function placeRandom() {
   window.removeEventListener("randomShipsPlayer", placeRandom);
